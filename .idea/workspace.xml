@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="631e9954-46ae-4c36-907b-549efd030042" name="Default Changelist" comment="" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="JavaScript File" />
+        <option value="Svelte Component" />
+        <option value="YesNoDialog" />
+        <option value="UserItem" />
+        <option value="AchivementsPage" />
+        <option value="PlayerProfilePage" />
+        <option value="PlayersPage" />
+        <option value="GamesArchive" />
+        <option value="SignUpPage" />
+        <option value="UserNameLink" />
+        <option value="About" />
+        <option value="GamesArchivePage" />
+      </list>
+    </option>
+  </component>
+  <component name="JsFlowSettings">
+    <service-enabled>true</service-enabled>
+    <exe-path />
+    <other-services-enabled>true</other-services-enabled>
+    <auto-save>true</auto-save>
+  </component>
+  <component name="ProjectId" id="1dPuUrwBdnXL5dEamcU5GbCUiTc" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="nodejs_package_manager_path" value="npm" />
+    <property name="settings.editor.selected.configurable" value="preferences.lookFeel" />
+    <property name="vue.rearranger.settings.migration" value="true" />
+  </component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/views/layout" />
+      <recent name="$PROJECT_DIR$/src/pages/newgame" />
+    </key>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="631e9954-46ae-4c36-907b-549efd030042" name="Default Changelist" comment="" />
+      <created>1592339067315</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1592339067315</updated>
+      <workItem from="1592339068438" duration="68853000" />
+      <workItem from="1593353313879" duration="399000" />
+      <workItem from="1593382373179" duration="16044000" />
+      <workItem from="1594017719830" duration="82430000" />
+      <workItem from="1594936416646" duration="2978000" />
+      <workItem from="1595232598888" duration="238000" />
+      <workItem from="1595241420587" duration="9211000" />
+      <workItem from="1598429719582" duration="10352000" />
+      <workItem from="1598799167066" duration="1452000" />
+      <workItem from="1599721519047" duration="679000" />
+      <workItem from="1601879097101" duration="3905000" />
+      <workItem from="1602789392804" duration="505000" />
+      <workItem from="1603018563297" duration="3481000" />
+      <workItem from="1603188116889" duration="1626000" />
+      <workItem from="1604157735012" duration="49496000" />
+      <workItem from="1605423743017" duration="292000" />
+      <workItem from="1605512425810" duration="991000" />
+      <workItem from="1605643670267" duration="411000" />
+      <workItem from="1605652792926" duration="65639000" />
+      <workItem from="1606721476313" duration="8924000" />
+      <workItem from="1606844732221" duration="13700000" />
+      <workItem from="1607097103582" duration="27004000" />
+      <workItem from="1607516223238" duration="18988000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+</project>

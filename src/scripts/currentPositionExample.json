@@ -1,0 +1,142 @@
+{
+  "currentRound": 1,
+  "currentTurn": 1,
+  "myTurnOrder": 1,
+  "sharePrices": {
+    "1": {
+      "price": 100,
+      "initialPrice": 100
+    },
+    "2": {
+      "price": 100,
+      "initialPrice": 100
+    },
+    "3": {
+      "price": 100,
+      "initialPrice": 100
+    },
+    "4": {
+      "price": 100,
+      "initialPrice": 100
+    }
+  },
+  "playerPositions": {
+    "1": {
+      "name": "Andrew",
+      "turnOrder": 1,
+      "cash": 0,
+      "shares": {
+        "1": {
+          "id": 1,
+          "amount": 1,
+          "canBuy": 0,
+          "initialAmount": 1
+        },
+        "2": {
+          "id": 2,
+          "amount": 1,
+          "canBuy": 0,
+          "initialAmount": 1
+        },
+        "3": {
+          "id": 3,
+          "amount": 1,
+          "canBuy": 0,
+          "initialAmount": 1
+        },
+        "4": {
+          "id": 4,
+          "amount": 1,
+          "canBuy": 0,
+          "initialAmount": 1
+        }
+      },
+      "total": 400,
+      "playerCards": [
+        {
+          "id": 169675,
+          "cardId": 1,
+          "applied": false
+        },
+        {
+          "id": 169669,
+          "cardId": 7,
+          "applied": false
+        },
+        {
+          "id": 169667,
+          "cardId": 11,
+          "applied": false
+        },
+        {
+          "id": 169673,
+          "cardId": 8,
+          "applied": false
+        },
+        {
+          "id": 169674,
+          "cardId": 37,
+          "applied": false
+        },
+        {
+          "id": 169672,
+          "cardId": 15,
+          "applied": false
+        },
+        {
+          "id": 169671,
+          "cardId": 41,
+          "applied": false
+        },
+        {
+          "id": 169676,
+          "cardId": 38,
+          "applied": false
+        },
+        {
+          "id": 169668,
+          "cardId": 22,
+          "applied": false
+        },
+        {
+          "id": 169670,
+          "cardId": 42,
+          "applied": false
+        }
+      ]
+    },
+    "2": {
+      "name": "test2",
+      "turnOrder": 2,
+      "cash": 0,
+      "shares": {
+        "1": {
+          "id": 1,
+          "amount": 1,
+          "canBuy": 0,
+          "initialAmount": 1
+        },
+        "2": {
+          "id": 2,
+          "amount": 1,
+          "canBuy": 0,
+          "initialAmount": 1
+        },
+        "3": {
+          "id": 3,
+          "amount": 1,
+          "canBuy": 0,
+          "initialAmount": 1
+        },
+        "4": {
+          "id": 4,
+          "amount": 1,
+          "canBuy": 0,
+          "initialAmount": 1
+        }
+      },
+      "total": 400,
+      "playerCards": []
+    }
+  }
+}
