@@ -1,9 +1,8 @@
 <script>
     import { SHARES } from '../scripts/gameDescription'
-    import {Colors} from '../scripts/constants'
 </script>
 
-<div class="row">
+<div class="row mb-1">
     <div class="col-md-1 text-center">
         Round / Turn
     </div>
@@ -11,7 +10,7 @@
         <table class="w-100 h-100">
             <tr>
                 {#each SHARES as shareId}
-                    <td style="background-color: {Colors[shareId]}">&nbsp;</td>
+                    <td class="share-color-{shareId}">&nbsp;</td>
                 {/each}
                 <td class="w-20 text-center">Cash</td>
             </tr>
@@ -22,7 +21,7 @@
             <tr>
                 <td class="w-20 text-center">Card</td>
                 {#each SHARES as shareId}
-                    <td style="background-color: {Colors[shareId]}">&nbsp;</td>
+                    <td class="share-color-{shareId}">&nbsp;</td>
                 {/each}
                 <td class="w-20 text-center">Cash</td>
             </tr>
@@ -32,7 +31,7 @@
         <table class="w-100 h-100">
             <tr>
                 {#each SHARES as shareId}
-                    <td style="background-color: {Colors[shareId]}">&nbsp;</td>
+                    <td class="share-color-{shareId}">&nbsp;</td>
                 {/each}
                 <td class="w-20 text-center">Cash</td>
             </tr>

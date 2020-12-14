@@ -1,11 +1,13 @@
 <script>
-    import { onMount } from 'svelte';
-    import { getGameReport, makeTurn } from '../../scripts/game';
+    import { onMount } from 'svelte'
+    import { getGameReport, makeTurn } from '../../scripts/game'
     import {getCurrentPosition} from '../../scripts/playGamePageMediator'
     import GameHeader from '../../components/GameHeader.svelte'
     import PositionPanel from '../../components/PositionPanel.svelte'
     import RoundsList from '../../components/RoundsList.svelte'
     import TurnForm from '../../components/TurnForm.svelte'
+    import CardSetPanel from '../../components/CardSetPanel.svelte'
+    import {GameStatus} from '../../scripts/constants'
 
     export let currentRoute
     export let params = {}
@@ -25,6 +27,7 @@
     function refreshGameReport() {
         let gameId = parseInt(currentRoute.namedParams.gameid)
         getGameReport(gameId, function (_gameSet) {
+            console.log(JSON.stringify(_gameSet))
             gameSet = _gameSet
             games = gameSet.games
             players = gameSet.players
@@ -36,7 +39,9 @@
             }
             if (game.id !== undefined) {
                 rounds = game.rounds
-                currentPosition = getCurrentPosition(game)
+                if (game.status === GameStatus.RUNNING) {
+                    currentPosition = getCurrentPosition(game)
+                }
             } else {
                 console.log('ERROR!') //todo - remove it
             }
@@ -65,12 +70,21 @@
 </svelte:head>
 
 <div class="container-fluid">
-    <GameHeader players="{players}" games="{games}" options="{options}"/>
-    <PositionPanel bind:this={positionPanel} currentPosition="{currentPosition}"/>
+    <div class="row pt-4 pb-4">
+        <div class="col-md-4">
+            <GameHeader options="{options}" game="{game}"/>
+        </div>
+        <div class="col-md-8">
+            {#if game.status === GameStatus.RUNNING}
+                <PositionPanel bind:this={positionPanel} currentPosition="{currentPosition}"/>
+            {/if}
+        </div>
+    </div>
     <RoundsList rounds="{rounds}"/>
-    {#if currentPosition.myTurnOrder === currentPosition.currentTurn}
+    {#if currentPosition.myTurnOrder === currentPosition.currentTurn && game.status === GameStatus.RUNNING}
         <TurnForm bind:this={turnForm} currentPosition={currentPosition} roundsNumber={roundsNumber}
                   on:cardapplied={updatePosition} on:resetcard={updatePosition}
                   on:buysell={updatePosition} on:reset={updatePosition} on:doturn={onDoTurn}/>
     {/if}
+    <CardSetPanel players="{game.players}"/>
 </div>

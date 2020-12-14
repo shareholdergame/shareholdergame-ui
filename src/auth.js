@@ -21,6 +21,8 @@ export async function authenticate(username, password, successCallback) {
 
 function setUserData(accessToken, username) {
     localStorage.setItem('auth-token', accessToken)
+    localStorage.setItem('authenticated', true)
+    localStorage.setItem('user', username)
     authenticated.set(true)
     user.set(username)
 }

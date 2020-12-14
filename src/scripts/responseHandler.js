@@ -12,8 +12,10 @@ export async function handleResponse(response, successCallback) {
             }
         })
     } else if (response.status === 401) {
-        localStorage.removeItem('auth')
-        user.set({})
+        localStorage.removeItem('auth-token')
+        localStorage.removeItem('authenticated')
+        localStorage.removeItem('user')
+        user.set('')
         authenticated.set(false)
         navigateTo('/signin');
     } else {

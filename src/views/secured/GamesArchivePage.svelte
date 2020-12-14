@@ -39,7 +39,9 @@
     </div>
     <div class="row row-cols-1 row-cols-md-3">
         {#each games as game}
-            <GameItem gameSet="{game}" on:view={showPlayGamePage}/>
+            <div class="col-4">
+                <GameItem gameSet="{game}" on:view={showPlayGamePage}/>
+            </div>
         {/each}
     </div>
 </div>

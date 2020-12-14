@@ -208,7 +208,7 @@ function buildPlayerPosition(player, step, sharePrices) {
     }
 }
 
-function sortCards(playerCards) {
+export function sortCards(playerCards) {
     playerCards.sort((pc, pc1) => { return CARD_SET[pc.cardId].displayOrder - CARD_SET[pc1.cardId].displayOrder})
     return playerCards
 }

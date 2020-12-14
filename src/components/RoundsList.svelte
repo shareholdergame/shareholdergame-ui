@@ -6,7 +6,7 @@
 </script>
 
 <RoundListHeader/>
-<div class="overflow-auto">
+<div class="overflow-y mb-3">
     {#each rounds as round}
         {#if round.round !== 0}
             <RoundItem round="{round}"/>

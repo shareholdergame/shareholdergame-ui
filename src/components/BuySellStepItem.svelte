@@ -12,10 +12,12 @@
                     {#if step.shares[shareId].repurchased}
                         <del class="text-black-50">{step.shares[shareId].amountBeforeRepurchase}</del>
                     {/if}
-                    {step.shares[shareId].amount}
+                    {#if step.shares[shareId].amount > 0}
+                        {step.shares[shareId].amount}
+                    {/if}
                 </td>
             {/each}
-            <td class="w-20 pr-1 text-right">{step.cash}</td>
+            <td class="w-20 pr-1 text-right"><em>{step.cash}</em></td>
         </tr>
     </table>
 {/if}

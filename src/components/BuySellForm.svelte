@@ -30,11 +30,11 @@
     }
 </script>
 
-<table style="width: 100%; height: 100%">
+<table>
     <tr>
         {#each SHARES as shareId}
-            <td><BuySellWidget step={step} share="{playerPosition.shares[shareId]}" on:buysell={buySellShare}/></td>
+            <td class="w-20"><BuySellWidget step={step} share="{playerPosition.shares[shareId]}" on:buysell={buySellShare}/></td>
         {/each}
-        <td style="width: 20%">{playerPosition.cash}</td>
+        <td class="w-20">{playerPosition.cash}</td>
     </tr>
 </table>

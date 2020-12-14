@@ -227,7 +227,7 @@
     }
 </script>
 
-<div class="row">
+<div class="row mb-3">
     <div class="col-md-1 text-center">
         {currentPosition.currentRound}.{currentPosition.currentTurn}
     </div>

@@ -60,13 +60,13 @@
     }
 </script>
 
-<table style="width: 100%; height: 100%">
+<table class="w-100">
     {#each playerCards as playerCard}
         {#if CARD_SET.hasOwnProperty(playerCard.cardId) && !playerCard.applied}
             <tr>
-                <td style="width: 20%"></td>
+                <td class="w-20"></td>
                 <CardRow bind:this={cardRows[playerCard.id]} playerCard={playerCard} on:cardselected={cardSelected}/>
-                <td style="width: 20%"></td>
+                <td class="w-20"></td>
             </tr>
         {/if}
     {/each}

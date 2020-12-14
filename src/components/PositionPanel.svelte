@@ -1,6 +1,7 @@
 <script>
     import { SHARES } from '../scripts/gameDescription'
     import PriceScale from './PriceScale.svelte'
+    import PlayerNameLink from './PlayerNameLink.svelte'
 
     export let currentPosition = {}
 
@@ -15,7 +16,9 @@
     </div>
     {#if currentPosition.hasOwnProperty('playerPositions')}
         {#each Object.entries(currentPosition.playerPositions) as [turnOrder, playerPosition]}
-            <div class="col-md-1">{turnOrder} - {playerPosition.name}</div>
+            <div class="col-md-1">
+                <PlayerNameLink name="{playerPosition.name}"/>
+            </div>
         {/each}
     {/if}
 </div>

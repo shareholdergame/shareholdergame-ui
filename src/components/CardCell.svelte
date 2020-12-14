@@ -1,7 +1,6 @@
 <script>
     import {createEventDispatcher} from 'svelte';
     import {CARD_SET, hasOperationForShare, getOperationsForShare, formatOperation} from '../scripts/gameDescription'
-    import {Colors, AltColors} from '../scripts/constants'
 
     const dispatch = createEventDispatcher();
 
@@ -36,12 +35,11 @@
 
 {#if cellStatus.operations.length > 0}
     {#if cellStatus.operations[0].shareId !== 0}
-        <td class="pr-1 text-right" style="background-color: {Colors[cellStatus.operations[0].shareId]}">
+        <td class="w-15 pr-1 text-right game-card-cell-color share-color-{cellStatus.operations[0].shareId}">
             {formatOperation(cellStatus.operations[0])}
         </td>
     {:else}
-        <td class="pr-1 pl-1 text-right"
-            style="background-color: {cellStatus.selected ? AltColors[cellStatus.shareId] : 'white'}">
+        <td class="w-15 pr-1 pl-1 text-right share-alt-color-{cellStatus.selected ? cellStatus.shareId : 0}">
             {#if cellStatus.operations.length > 1}
                 <select bind:value={cellStatus.selectedOperand}
                         class="form-control form-control-sm" on:blur={selectCardOperation}>

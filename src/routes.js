@@ -31,8 +31,7 @@ authenticated.subscribe(value => {
 const routes = [
     {
         name: '/',
-        component: LandingPage,
-        onlyIf: { guard: isNotAuthenticated, redirect: '/secure/home' }
+        component: LandingPage
     },
     {
         name: 'signin',

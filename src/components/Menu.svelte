@@ -32,6 +32,7 @@
     <ul class="nav navbar-nav">
         {#if $authenticated}
             <li><a class="nav-link" href="/secure/profile">{$user}</a></li>
+            <li>&#128276;</li>
         {:else}
             <li><a class="nav-link" href="/signin">Sign In</a></li>
             <li><a class="nav-link" href="/signup">Sign Up</a></li>
