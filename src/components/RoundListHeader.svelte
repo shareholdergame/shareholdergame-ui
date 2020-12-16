@@ -2,7 +2,7 @@
     import { SHARES } from '../scripts/gameDescription'
 </script>
 
-<div class="row mb-1">
+<div class="row bg-light">
     <div class="col-md-1 text-center">
         Round / Turn
     </div>

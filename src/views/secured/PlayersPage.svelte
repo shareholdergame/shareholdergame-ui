@@ -30,7 +30,7 @@
             <h2>Players</h2>
         </div>
     </div>
-    <div class="row">
+    <!--<div class="row">
         <div class="btn-group btn-group-toggle" data-toggle="buttons">
             {#each Object.entries(GAME_OPTIONS) as [gameOptionName, gameOption]}
                 <label class="btn btn-secondary">
@@ -38,7 +38,7 @@
                 </label>
             {/each}
         </div>
-    </div>
+    </div>-->
     <div class="row table-responsive">
         <table class="table table-striped">
             <thead>

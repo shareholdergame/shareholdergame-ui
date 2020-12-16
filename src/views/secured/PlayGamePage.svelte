@@ -7,6 +7,7 @@
     import RoundsList from '../../components/RoundsList.svelte'
     import TurnForm from '../../components/TurnForm.svelte'
     import CardSetPanel from '../../components/CardSetPanel.svelte'
+    import ResultPanel from '../../components/ResultPanel.svelte'
     import {GameStatus} from '../../scripts/constants'
 
     export let currentRoute
@@ -70,13 +71,15 @@
 </svelte:head>
 
 <div class="container-fluid">
-    <div class="row pt-4 pb-4">
-        <div class="col-md-4">
+    <div class="row pt-3 pb-3">
+        <div class="col-md-4 text-center align-middle">
             <GameHeader options="{options}" game="{game}"/>
         </div>
         <div class="col-md-8">
             {#if game.status === GameStatus.RUNNING}
                 <PositionPanel bind:this={positionPanel} currentPosition="{currentPosition}"/>
+            {:else if game.status === GameStatus.FINISHED}
+                <ResultPanel gameSet="{gameSet}"/>
             {/if}
         </div>
     </div>
