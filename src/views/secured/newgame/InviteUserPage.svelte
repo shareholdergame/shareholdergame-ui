@@ -32,6 +32,10 @@
     }
 </script>
 
+<svelte:head>
+    <title>Game Stockholder - Invite User</title>
+</svelte:head>
+
 <div class="container-fluid">
     <div class="row mb-3 mt-3">
         <div class="col d-inline-flex border-bottom">

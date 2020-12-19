@@ -5,6 +5,10 @@
     export let params = {}
 </script>
 
+<svelte:head>
+    <title>Game Stockholder - Select Game Option</title>
+</svelte:head>
+
 <div class="container-fluid">
     <div class="row mb-3 mt-3">
         <div class="col">

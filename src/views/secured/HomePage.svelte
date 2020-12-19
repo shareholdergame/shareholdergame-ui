@@ -1,6 +1,7 @@
 <script>
     import { onMount } from 'svelte';
     import {navigateTo} from 'svelte-router-spa'
+    import {currentPath} from "../../stores";
     import {getMyGames, performInvitationStatusChange} from '../../scripts/game';
     import {GameStatus, InvitationAction} from '../../scripts/constants'
     import InvitationItem from '../../components/InvitationItem.svelte'
@@ -43,6 +44,7 @@
     }
 
     onMount(() => {
+        currentPath.set(currentRoute.path)
         refreshGamesList()
     })
 </script>

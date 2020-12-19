@@ -1,10 +1,11 @@
 <script>
 	import {Router} from 'svelte-router-spa'
 	import {routes} from './routes'
-	import Menu from './components/Menu.svelte'
     import {getMessages} from "./scripts/queue";
     import {REFRESH_INTERVAl} from "./scripts/constants";
     import { authenticated } from  './stores.js'
+    import {handleNotifications} from "./scripts/notificationHandler";
+    import Menu from './components/Menu.svelte'
 
     let is_authenticated = false;
 
@@ -18,7 +19,7 @@
         if (is_authenticated) {
             getMessages(function (value) {
                 if (value !== undefined) {
-                    console.log(JSON.stringify(value))
+                    handleNotifications(value)
                 }
             })
         } else {

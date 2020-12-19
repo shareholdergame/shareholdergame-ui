@@ -18,6 +18,10 @@
     })
 </script>
 
+<svelte:head>
+    <title>Game Stockholder - Profile</title>
+</svelte:head>
+
 <div class="container-fluid">
     <div class="row mb-3 mt-3">
         <div class="col">

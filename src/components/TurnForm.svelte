@@ -76,8 +76,14 @@
     let firstStep = buildFirstStep()
     let priceStep = buildPriceStep()
 
+    let firstBuySellForm
+    let lastBuySellForm
     let resetFirstBuySellStepBtn
     let resetLastBuySellStepBtn
+
+    function isLastTurn() {
+        return currentPosition.currentRound === roundsNumber
+    }
 
     function copySharesAmount(shares, shares1) {
         for (const shareId of SHARES) {
@@ -91,8 +97,9 @@
         }
     }
 
-    function cardApplied(event) {
+    function onApplyCard(event) {
         applyCard(event.detail.cardId, event.detail.operations, currentPosition);
+
         turn.cardStep.playerCardId = event.detail.playerCardId
         for (const shareId in event.detail.operations) {
             if (event.detail.operations.hasOwnProperty(shareId)) {
@@ -102,24 +109,47 @@
                 })
             }
         }
-
         cardId = event.detail.cardId
         copySharePrices(priceStep.sharePrices, currentPosition.sharePrices)
         priceStep.cash = currentPosition.playerPositions[currentPosition.myTurnOrder].cash
 
-        recalculateTotal(currentPosition)
+        if (!isLastTurn()) {
+            lockShares(currentPosition.playerPositions[currentPosition.myTurnOrder].shares)
+            resetFirstBuySellStepBtn.disabled = true
+        }
 
         currentStep = StepType.LAST_BUY_SELL_STEP
-        resetFirstBuySellStepBtn.disabled = true
-
+        recalculateTotal(currentPosition)
         dispatch('cardapplied', event.detail)
+    }
+
+    function lockShares(shares) {
+        for (const shareId of SHARES) {
+            if (shares.hasOwnProperty(shareId)) {
+                if (shares[shareId].amount > shares[shareId].initialAmount) {
+                    shares[shareId].lockedAmount = shares[shareId].amount - shares[shareId].initialAmount
+                }
+            }
+        }
+    }
+
+    function resetLockedShares(shares) {
+        for (const shareId of SHARES) {
+            if (shares.hasOwnProperty(shareId)) {
+                shares[shareId].lockedAmount = 0
+            }
+        }
     }
 
     function resetCard(event) {
         resetPrices(currentPosition)
 
-        copySharesAmount(currentPosition.playerPositions[currentPosition.myTurnOrder].shares, firstStep.shares)
-        currentPosition.playerPositions[currentPosition.myTurnOrder].cash = firstStep.cash
+        if (!isLastTurn()) {
+            copySharesAmount(currentPosition.playerPositions[currentPosition.myTurnOrder].shares, firstStep.shares)
+            currentPosition.playerPositions[currentPosition.myTurnOrder].cash = firstStep.cash
+            resetLockedShares(currentPosition.playerPositions[currentPosition.myTurnOrder].shares)
+        }
+
         for (const turnOrder in currentPosition.playerPositions) {
             if (currentPosition.playerPositions.hasOwnProperty(turnOrder)
                 && currentPosition.playerPositions[turnOrder] !== currentPosition.myTurnOrder) {
@@ -135,12 +165,13 @@
             }
         }
 
-        recalculateTotal(currentPosition)
+        if (!isLastTurn()) {
+            resetFirstBuySellStepBtn.disabled = false
+        }
 
         turn.cardStep = buildCardStep()
         currentStep = StepType.FIRST_BUY_SELL_STEP
-        resetFirstBuySellStepBtn.disabled = false
-
+        recalculateTotal(currentPosition)
         dispatch('resetcard')
     }
 
@@ -173,9 +204,6 @@
                 currentStep === StepType.FIRST_BUY_SELL_STEP
                     ? currentPosition.playerPositions[currentPosition.myTurnOrder].shares[shareId].initialAmount
                     : firstStep.shares[shareId].amount
-            if (currentStep === StepType.FIRST_BUY_SELL_STEP) {
-                currentPosition.playerPositions[currentPosition.myTurnOrder].shares[shareId].lockedAmount = 0
-            }
         }
         currentPosition.playerPositions[currentPosition.myTurnOrder].cash =
             currentStep === StepType.FIRST_BUY_SELL_STEP
@@ -186,18 +214,15 @@
                 calculateCanBuy(currentPosition.playerPositions[currentPosition.myTurnOrder].cash, sharePrices[shareId].price)
         }
         if (currentStep === StepType.FIRST_BUY_SELL_STEP) {
+            firstBuySellForm.reset()
             turn.firstBuySellStep = buildBuySellStep()
             resetFirstBuySellStepBtn.disabled = true
         } else if (currentStep === StepType.LAST_BUY_SELL_STEP) {
+            lastBuySellForm.reset()
             turn.lastBuySellStep = buildBuySellStep()
             resetLastBuySellStepBtn.disabled = true
         }
-
         dispatch('reset')
-    }
-
-    function isLastTurn() {
-        return currentPosition.currentRound === roundsNumber
     }
 
     function isNothingBoughtSolt() {
@@ -215,7 +240,7 @@
 
     function doTurn(event) {
         let readyToSendTurn
-        if (isNothingBoughtSolt()) {
+        if (isNothingBoughtSolt() && !isLastTurn()) {
             readyToSendTurn = confirm('You havent buy/sell anything on the third step. Do you want to continue?')
         } else {
             readyToSendTurn = true
@@ -227,52 +252,58 @@
     }
 </script>
 
-<div class="row mb-3">
+<div class="row">
     <div class="col-md-1 text-center">
         {currentPosition.currentRound}.{currentPosition.currentTurn}
     </div>
     <div class="col-md-3 align-top">
-        {#if currentStep === StepType.FIRST_BUY_SELL_STEP && !isLastTurn() && currentPosition.hasOwnProperty('sharePrices')}
-            <BuySellForm step={StepType.FIRST_BUY_SELL_STEP}
-                         sharePrices={currentPosition.sharePrices}
-                         playerPosition={currentPosition.playerPositions[currentPosition.myTurnOrder]}
-                         on:buysell={firstBuySell}/>
-        {:else}
-            <BuySellStepItem step="{firstStep}"/>
+        {#if !isLastTurn()}
+            {#if currentStep === StepType.FIRST_BUY_SELL_STEP && currentPosition.hasOwnProperty('sharePrices')}
+                <BuySellForm bind:this={firstBuySellForm}
+                             step={StepType.FIRST_BUY_SELL_STEP}
+                             sharePrices={currentPosition.sharePrices}
+                             playerPosition={currentPosition.playerPositions[currentPosition.myTurnOrder]}
+                             on:buysell={firstBuySell}/>
+            {:else}
+                <BuySellStepItem step="{firstStep}"/>
+            {/if}
+            <div class="text-right">
+                <button bind:this={resetFirstBuySellStepBtn} on:click={resetBuySell} disabled class="btn btn-secondary form-control-sm">Reset</button>
+            </div>
         {/if}
-        <div class="text-right">
-            <button bind:this={resetFirstBuySellStepBtn} on:click={resetBuySell} disabled class="btn btn-secondary form-control-sm">Reset</button>
-        </div>
     </div>
     <div class="col-md-4">
         {#if currentStep === StepType.FIRST_BUY_SELL_STEP && currentPosition.hasOwnProperty('playerPositions')}
             <ApplyCardForm playerCards={currentPosition.playerPositions[currentPosition.myTurnOrder].playerCards}
                            cash={currentPosition.playerPositions[currentPosition.myTurnOrder].cash}
-                           on:cardapplied={cardApplied} on:resetcard={resetCard}/>
+                           on:cardapplied={onApplyCard}/>
         {:else}
             <PriceChangeStepItem cardId="{cardId}" step="{priceStep}"/>
             <div class="text-right">
-                <button on:click={resetCard} class="btn btn-secondary form-control-sm">Reset</button>
+                <button id="resetCardBtn" on:click={resetCard} class="btn btn-secondary form-control-sm">Reset</button>
             </div>
         {/if}
     </div>
     <div class="col-md-3 align-top">
         {#if currentStep === StepType.LAST_BUY_SELL_STEP && !isLastTurn() && currentPosition.hasOwnProperty('playerPositions')}
-            <BuySellForm step={StepType.LAST_BUY_SELL_STEP}
+            <BuySellForm bind:this={lastBuySellForm}
+                         step={StepType.LAST_BUY_SELL_STEP}
                          sharePrices={currentPosition.sharePrices}
                          playerPosition={currentPosition.playerPositions[currentPosition.myTurnOrder]}
                          on:buysell={lastBuySell}/>
             <div class="text-right">
                 <button bind:this={resetLastBuySellStepBtn} on:click={resetBuySell} disabled class="btn btn-secondary form-control-sm">Reset</button>
-                <button on:click={doTurn} class="btn btn-primary">Do Turn</button>
             </div>
-        {:else}
-            -- THIRD STEP HERE --
         {/if}
     </div>
     <div class="col-md-1 text-center">
         {#if currentPosition.hasOwnProperty('playerPositions')}
             {currentPosition.playerPositions[currentPosition.myTurnOrder].total}
         {/if}
+    </div>
+</div>
+<div class="row mb-3">
+    <div class="col-md-10 text-right">
+        <button on:click={doTurn} class="btn btn-primary">Do Turn</button>
     </div>
 </div>

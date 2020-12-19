@@ -11,6 +11,8 @@
     export let sharePrices = {}
     export let playerPosition = {}
 
+    let controls = {}
+
     function buySellShare(event) {
         let buySellData = event.detail
         let buySellAmount = buySellData.buySellAmount
@@ -18,6 +20,7 @@
             let cost = buySellAmount * sharePrices[buySellData.shareId].price
             if (cost < 0 || (cost > 0 && cost <= playerPosition.cash)) {
                 playerPosition.cash = playerPosition.cash - cost
+                playerPosition.shares[buySellData.shareId].amount = playerPosition.shares[buySellData.shareId].amount + buySellAmount
             }
             let shares = playerPosition.shares
             for (const shareId in shares) {
@@ -28,12 +31,20 @@
         }
         dispatch('buysell', buySellData)
     }
+
+    export function reset() {
+        for (const shareId of SHARES) {
+            if (controls.hasOwnProperty(shareId)) {
+                controls[shareId].reset()
+            }
+        }
+    }
 </script>
 
 <table>
     <tr>
         {#each SHARES as shareId}
-            <td class="w-20"><BuySellWidget step={step} share="{playerPosition.shares[shareId]}" on:buysell={buySellShare}/></td>
+            <td class="w-20"><BuySellWidget bind:this={controls[shareId]} step={step} share="{playerPosition.shares[shareId]}" on:buysell={buySellShare}/></td>
         {/each}
         <td class="w-20">{playerPosition.cash}</td>
     </tr>

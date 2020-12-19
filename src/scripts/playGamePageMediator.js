@@ -6,10 +6,10 @@ export function buildGameHeader(gameSet) {
     return '' //todo - implement
 }
 
-export function getCurrentPosition(game) {
+export function getCurrentPosition(game, options) {
     let players = game.players
     let rounds = game.rounds
-    //let turnsCount = gameSet.options.cardOption.minor + gameSet.options.cardOption.major
+    let roundsCount = options.cardOption.minor + options.cardOption.major
 
     let playersCount = players.length
     let lastRoundNumber = -1
@@ -26,7 +26,7 @@ export function getCurrentPosition(game) {
             for (const turn of round.turns) {
                 lastSteps[turn.turn] = lastRoundNumber === 0
                     ? turn.steps[StepType.ZERO_STEP]
-                    : turn.steps[StepType.LAST_BUY_SELL_STEP]
+                    : roundsCount === round.round ? turn.steps[StepType.PRICE_CHANGE_STEP] : turn.steps[StepType.LAST_BUY_SELL_STEP]
                 if (turn.turn === lastTurnNumber) {
                     currentPrices = buildCurrentPrices(lastRoundNumber === 0
                         ? turn.steps[StepType.ZERO_STEP].sharePrices

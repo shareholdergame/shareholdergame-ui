@@ -1,5 +1,6 @@
 <script>
     import { onMount } from 'svelte'
+    import {currentPath} from "../../stores";
     import { getGameReport, makeTurn } from '../../scripts/game'
     import {getCurrentPosition} from '../../scripts/playGamePageMediator'
     import GameHeader from '../../components/GameHeader.svelte'
@@ -41,7 +42,7 @@
             if (game.id !== undefined) {
                 rounds = game.rounds
                 if (game.status === GameStatus.RUNNING) {
-                    currentPosition = getCurrentPosition(game)
+                    currentPosition = getCurrentPosition(game, options)
                 }
             } else {
                 console.log('ERROR!') //todo - remove it
@@ -51,6 +52,7 @@
     }
 
     onMount(() => {
+        currentPath.set(currentRoute.path)
         refreshGameReport();
     })
 
