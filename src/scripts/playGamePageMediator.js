@@ -141,14 +141,16 @@ function repurchaseShares(currentPosition, repurchases) {
                 let playerPosition = currentPosition.playerPositions[turnOrder]
                 for (const repurchase of repurchases) {
                     if (playerPosition.shares[repurchase.shareId].amount > 0) {
+                        let oldAmount = playerPosition.shares[repurchase.shareId].amount
+                        playerPosition.shares[repurchase.shareId].amount = 0
+                        playerPosition.shares[repurchase.shareId].repurchased = true
                         let repurchasedSharesAmount = Math.abs(Math.floor(playerPosition.cash / repurchase.cost))
                         if (repurchasedSharesAmount > 0) {
-                            if (repurchasedSharesAmount > playerPosition.shares[repurchase.shareId].amount) {
-                                repurchasedSharesAmount = playerPosition.shares[repurchase.shareId].amount
+                            if (repurchasedSharesAmount > oldAmount) {
+                                repurchasedSharesAmount = oldAmount
                             }
                             playerPosition.shares[repurchase.shareId].amount = repurchasedSharesAmount
                             playerPosition.cash = playerPosition.cash - (repurchase.cost * repurchasedSharesAmount)
-                            playerPosition.shares[repurchase.shareId].repurchased = true
                         }
                     }
                 }
