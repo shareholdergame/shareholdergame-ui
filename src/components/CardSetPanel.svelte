@@ -12,7 +12,7 @@
             <PlayerNameLink name="{player.name}"/>
         </div>
         {#each sortCards(player.playerCards) as playerCard}
-            <div class="pr-1 pl-5 mr-1 text-right game-card-cell-color share-color-{getShareId(playerCard.cardId)}" style="width: 6em;">
+            <div class="pr-1 pl-5 mr-1 text-right game-card-cell-color rounded share-color-{getShareId(playerCard.cardId)}" style="width: 6em;">
                 <strong>{getCardName(playerCard.cardId)}</strong>
             </div>
         {/each}

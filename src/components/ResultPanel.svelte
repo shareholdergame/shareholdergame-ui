@@ -1,6 +1,9 @@
 <script>
+    import {createEventDispatcher} from 'svelte';
     import { Navigate } from 'svelte-router-spa'
     import PlayerNameLink from './PlayerNameLink.svelte'
+
+    const dispatch = createEventDispatcher();
 
     export let gameSet
 </script>
@@ -35,7 +38,7 @@
                 <table class="mr-3 bg-light">
                     <tr>
                         <th class="text-center" colspan="2">
-                            <Navigate to="/secure/playgame/{game.id}">Game {game.letter}</Navigate>
+                            <button id="gameReportBtn" type="button" class="btn btn-link" on:click={dispatch('gamereport', game.id)}>Game {game.letter}</button>
                         </th>
                     </tr>
                     <tr>

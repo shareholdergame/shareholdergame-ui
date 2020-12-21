@@ -3,6 +3,7 @@
     import {navigateTo} from 'svelte-router-spa'
     import {currentPath} from "../../stores";
     import {getMyGames, performInvitationStatusChange} from '../../scripts/game';
+    import {getWhoPlaysNow} from "../../scripts/player";
     import {GameStatus, InvitationAction} from '../../scripts/constants'
     import InvitationItem from '../../components/InvitationItem.svelte'
     import GameItem from '../../components/GameItem.svelte'
@@ -12,6 +13,7 @@
 
     let games = []
     let invitations = []
+    let whoPlaysNow = []
 
     function refreshGamesList() {
         getMyGames('all', GameStatus.RUNNING, {offset: 0, ipp: 20}, function (gamesList) {
@@ -19,6 +21,9 @@
         })
         getMyGames('all', GameStatus.CREATED, {offset: 0, ipp: 20}, function (gamesList) {
             invitations = gamesList.items
+        })
+        getWhoPlaysNow(function (gamesList) {
+            whoPlaysNow = gamesList
         })
     }
 
@@ -75,6 +80,26 @@
         </div>
         <div class="col-sm">
             <h4>Now playing</h4>
+            <table class="table">
+                <tr>
+                    <th>Игра</th>
+                    <th style="text-align: center">Партия</th>
+                    <th style="text-align: center">Текущий Ход</th>
+                </tr>
+                {#each whoPlaysNow as item}
+                    <tr>
+                        <td>{item.gameLabel}</td>
+                        <td style="text-align: center">{item.gameLetter}</td>
+                        <td style="text-align: center">
+                            {#if item.round === 0}
+                                Нет ходов
+                            {:else}
+                                {item.round}.{item.turn}
+                            {/if}
+                        </td>
+                    </tr>
+                {/each}
+            </table>
         </div>
     </div>
 </div>

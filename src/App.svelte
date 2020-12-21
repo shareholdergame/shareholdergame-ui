@@ -13,7 +13,7 @@
         is_authenticated = value;
     })
 
-    let interval = setInterval(checkMessagesQueue, REFRESH_INTERVAl)
+    let interval
 
     function checkMessagesQueue() {
         if (is_authenticated) {
@@ -26,6 +26,16 @@
             clearInterval(interval)
         }
     }
+
+    function startRefresh() {
+        interval = setInterval(checkMessagesQueue, REFRESH_INTERVAl)
+    }
+    function stopRefresh() {
+        clearInterval(interval);
+    }
+
+    window.addEventListener('focus', startRefresh);
+    window.addEventListener('blur', stopRefresh);
 </script>
 
 <Menu />

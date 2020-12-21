@@ -46,10 +46,10 @@
     <div class="row mb-3">
         <div class="col-4 d-inline-flex">
             <h4>Select user to play</h4>
-            <div class="flex-grow-1">
-                <h4 class="text-center">-- OR --</h4>
+            <!--<div class="flex-grow-1">
+                <h4 class="text-center">&#45;&#45; OR &#45;&#45;</h4>
             </div>
-            <button type="button" class="btn btn-secondary">Play With Computer</button>
+            <button type="button" class="btn btn-secondary">Play With Computer</button>-->
         </div>
         <div class="col-4">
         </div>

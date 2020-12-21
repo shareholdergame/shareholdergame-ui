@@ -26,8 +26,7 @@
     let positionPanel
     let turnForm
 
-    function refreshGameReport() {
-        let gameId = parseInt(currentRoute.namedParams.gameid)
+    function refreshGameReport(gameId) {
         getGameReport(gameId, function (_gameSet) {
             console.log(JSON.stringify(_gameSet))
             gameSet = _gameSet
@@ -53,7 +52,8 @@
 
     onMount(() => {
         currentPath.set(currentRoute.path)
-        refreshGameReport();
+        let gameId = parseInt(currentRoute.namedParams.gameid)
+        refreshGameReport(gameId);
     })
 
     function updatePosition(event) {
@@ -65,6 +65,11 @@
         makeTurn(gameId, event.detail, function () {
             refreshGameReport()
         })
+    }
+
+    function onGameReport(event) {
+        let gameId = parseInt(event.detail)
+        refreshGameReport(gameId)
     }
 </script>
 
@@ -81,7 +86,7 @@
             {#if game.status === GameStatus.RUNNING}
                 <PositionPanel bind:this={positionPanel} currentPosition="{currentPosition}"/>
             {:else if game.status === GameStatus.FINISHED}
-                <ResultPanel gameSet="{gameSet}"/>
+                <ResultPanel gameSet="{gameSet}" on:gamereport={onGameReport}/>
             {/if}
         </div>
     </div>

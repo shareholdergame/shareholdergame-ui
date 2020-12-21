@@ -1,5 +1,5 @@
 <script>
-    import { authenticated } from '../../stores.js'
+    //import { authenticated } from '../../stores.js'
 
     export let currentRoute
     export let params = {}
@@ -21,9 +21,10 @@
                         переносить горечь поражений.</p>
                     <hr class="intro-divider">
                     <a href="/secure/home" class="btn btn-primary btn-lg active" style="width: 200px" role="button" aria-pressed="true">Play</a>
-                    {#if !$authenticated}
+                    <a href="https://stockholdergame.com/game" class="btn btn-primary" style="width: 200px" role="link">Old Version (Adobe Flash required)</a>
+                    <!--{#if !$authenticated}
                         <a href="/signup" class="btn btn-secondary btn-lg active" style="width: 200px" role="button" aria-pressed="true">Sign Up</a>
-                    {/if}
+                    {/if}-->
                 </div>
             </div>
         </div>

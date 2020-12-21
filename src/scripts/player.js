@@ -50,3 +50,17 @@ export async function getPlayersStatistics(gameOption, parameters, successCallba
 
     handleResponse(response, successCallback)
 }
+
+export async function getWhoPlaysNow(successCallback) {
+    let url = API_BASE_URL + '/player/whoplaysnow'
+
+    let response = await fetch(url, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': getBearer()
+        }
+    })
+
+    handleResponse(response, successCallback)
+}

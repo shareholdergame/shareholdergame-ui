@@ -25,17 +25,17 @@
 
     <ul class="nav navbar-nav">
         <li><a class="nav-link" href="/about">About Game</a></li>
-        <li><a class="nav-link" href="/rules">Rules</a></li>
-        <li><a class="nav-link" href="http://forum.stockholdergame.com">Forum</a></li>
+        <li><a class="nav-link" href="https://stockholdergame.com/rules">Rules</a></li>
+        <li><a class="nav-link" href="https://forum.stockholdergame.com">Forum</a></li>
     </ul>
 
     <ul class="nav navbar-nav">
         {#if $authenticated}
             <li><a class="nav-link" href="/secure/profile">{$user}</a></li>
-            <li>&#128276;</li>
+            <!--<li>&#128276;</li>-->
         {:else}
             <li><a class="nav-link" href="/signin">Sign In</a></li>
-            <li><a class="nav-link" href="/signup">Sign Up</a></li>
+            <!--<li><a class="nav-link" href="/signup">Sign Up</a></li>-->
         {/if}
     </ul>
 </nav>
