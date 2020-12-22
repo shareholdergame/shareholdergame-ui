@@ -1,4 +1,4 @@
-import { authenticated, user } from './stores.js'
+import { authenticated, user, errorMessage } from './stores.js'
 import { API_BASE_URL } from './scripts/constants'
 import {navigateTo} from "svelte-router-spa";
 import {handleResponse} from "./scripts/responseHandler";
@@ -20,6 +20,11 @@ export async function authenticate(username, password, successCallback) {
             localStorage.setItem('user', accountDetails.userName)
             user.set(accountDetails.userName)
         })
+    } else if (response.status === 400) {
+        let result = await response.json()
+        if (result.error === 'invalid_grant') {
+            errorMessage.set('Invalid user name or password')
+        }
     }
 
     successCallback();

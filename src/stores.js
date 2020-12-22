@@ -6,3 +6,4 @@ const storedUser = localStorage.getItem('user') !== null ? localStorage.getItem(
 export const authenticated = writable(storedAuthenticated);
 export const user = writable(storedUser);
 export const currentPath = writable('/')
+export const errorMessage = writable('')

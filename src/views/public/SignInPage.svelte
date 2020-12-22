@@ -1,4 +1,5 @@
 <script>
+    import {errorMessage} from "../../stores";
     import {authenticate} from '../../auth.js';
     import {navigateTo} from 'svelte-router-spa'
 
@@ -23,6 +24,11 @@
     <div class="row justify-content-md-center">
         <div class="col-lg-4">
             <h2>Sign In</h2>
+            {#if $errorMessage !== ''}
+                <div class="alert alert-danger" role="alert">
+                    {$errorMessage}
+                </div>
+            {/if}
             <div class="form-group">
                 <label for="emailOrUserName">User name or Email</label>
                 <input bind:value={userNameOrEmail} type="text" id="emailOrUserName" class="form-control"

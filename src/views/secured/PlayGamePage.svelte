@@ -97,5 +97,5 @@
                   on:cardapplied={updatePosition} on:resetcard={updatePosition}
                   on:buysell={updatePosition} on:reset={updatePosition} on:doturn={onDoTurn}/>
     {/if}
-    <CardSetPanel players="{game.players}"/>
+    <CardSetPanel players="{game.players}" gameStatus="{game.status}"/>
 </div>

@@ -16,7 +16,8 @@ export function handleNotifications(notifications) {
     let pageNeedRefresh = false
     let notifReqRefresh = false
     for (const notification of notifications) {
-        notifReqRefresh = notification.type === 'MOVE_DONE'
+        notifReqRefresh = notification.type === 'GAME_STARTED' || notification.type === 'MOVE_DONE'
+            || notification.type === 'GAME_FINISHED'
     }
     for (const page of refreshablePages) {
         if (_currentPath.includes(page)) {
