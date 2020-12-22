@@ -42,6 +42,7 @@
                 rounds = game.rounds
                 if (game.status === GameStatus.RUNNING) {
                     currentPosition = getCurrentPosition(game, options)
+                    console.log(JSON.stringify(currentPosition))
                 }
             } else {
                 console.log('ERROR!') //todo - remove it
@@ -63,7 +64,7 @@
     function onDoTurn(event) {
         let gameId = parseInt(currentRoute.namedParams.gameid)
         makeTurn(gameId, event.detail, function () {
-            refreshGameReport()
+            refreshGameReport(gameId)
         })
     }
 

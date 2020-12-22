@@ -1,5 +1,10 @@
 <script>
     import { authenticated, user } from '../stores.js'
+    import {logout} from "../auth";
+
+    function onSignOut(event) {
+        logout()
+    }
 </script>
 
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -33,6 +38,7 @@
         {#if $authenticated}
             <li><a class="nav-link" href="/secure/profile">{$user}</a></li>
             <!--<li>&#128276;</li>-->
+            <li><button class="btn btn-outline-secondary" on:click={onSignOut}>Sign Out</button></li>
         {:else}
             <li><a class="nav-link" href="/signin">Sign In</a></li>
             <!--<li><a class="nav-link" href="/signup">Sign Up</a></li>-->
