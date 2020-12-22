@@ -25,7 +25,7 @@
 
     <ul class="nav navbar-nav">
         <li><a class="nav-link" href="/about">About Game</a></li>
-        <li><a class="nav-link" href="https://stockholdergame.com/rules">Rules</a></li>
+        <li><a class="nav-link" href="https://shareholdergame.com/rules/index.html">Rules</a></li>
         <li><a class="nav-link" href="https://forum.stockholdergame.com">Forum</a></li>
     </ul>
 
