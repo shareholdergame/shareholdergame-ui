@@ -1,6 +1,6 @@
 <script>
     import { createEventDispatcher } from 'svelte';
-    import BuySellWidget from './BuySellWidget.svelte'
+    import SingleBuySellForm from './SingleBuySellForm.svelte'
     import { calculateCanBuy } from '../scripts/playGamePageMediator'
     import { SHARES } from '../scripts/gameDescription'
     import {StepType} from "../scripts/constants";
@@ -44,7 +44,7 @@
 <table>
     <tr>
         {#each SHARES as shareId}
-            <td class="w-20"><BuySellWidget bind:this={controls[shareId]} step={step} share="{playerPosition.shares[shareId]}" on:buysell={buySellShare}/></td>
+            <td class="w-20"><SingleBuySellForm bind:this={controls[shareId]} step={step} share="{playerPosition.shares[shareId]}" on:buysell={buySellShare}/></td>
         {/each}
         <td class="w-20">{playerPosition.cash}</td>
     </tr>

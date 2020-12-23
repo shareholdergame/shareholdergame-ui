@@ -1,5 +1,6 @@
 <script>
-    import { getCardName, getShareId } from '../scripts/gameDescription'
+    import { getCardName, getShareId, isMajorCard } from '../scripts/gameDescription'
+    import {isMe} from "../auth";
     import {sortCards} from "../scripts/playGamePageMediator";
     import {GameStatus} from "../scripts/constants";
     import PlayerNameLink from './PlayerNameLink.svelte'
@@ -13,11 +14,25 @@
         <div class="col-md-2 text-right">
             <PlayerNameLink name="{player.name}"/>
         </div>
-        {#each sortCards(player.playerCards) as playerCard}
-            <div class="pr-1 pl-5 mr-1 text-right game-card-cell-color rounded share-color-{getShareId(playerCard.cardId)}"
-                 style="width: 6em; opacity: {gameStatus === GameStatus.RUNNING && playerCard.applied ? '0.3' : '1'};">
-                <strong>{getCardName(playerCard.cardId)}</strong>
-            </div>
-        {/each}
+        <div class="col-md-3 mr-3 d-inline-flex">
+            {#each sortCards(player.playerCards) as playerCard}
+                {#if isMajorCard(playerCard.cardId)}
+                    <div class="pr-1 pl-5 mr-1 text-right game-card-cell-color rounded share-color-{getShareId(playerCard.cardId)}"
+                         style="width: 6em; opacity: {gameStatus === GameStatus.RUNNING && playerCard.applied && isMe(player.name) ? '0.3' : '1'};">
+                        <strong>{getCardName(playerCard.cardId)}</strong>
+                    </div>
+                {/if}
+            {/each}
+        </div>
+        <div class="col-md-4 mr-3 d-inline-flex">
+            {#each sortCards(player.playerCards) as playerCard}
+                {#if !isMajorCard(playerCard.cardId)}
+                    <div class="pr-1 pl-5 mr-1 text-right game-card-cell-color rounded share-color-{getShareId(playerCard.cardId)}"
+                         style="width: 6em; opacity: {gameStatus === GameStatus.RUNNING && playerCard.applied && isMe(player.name) ? '0.3' : '1'};">
+                        <strong>{getCardName(playerCard.cardId)}</strong>
+                    </div>
+                {/if}
+            {/each}
+        </div>
     </div>
 {/each}

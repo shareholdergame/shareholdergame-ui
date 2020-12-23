@@ -55,6 +55,10 @@ export function getShareId(cardId) {
     return 0
 }
 
+export function isMajorCard(cardId) {
+    return CARD_SET[cardId].group === 'major'
+}
+
 export const CARD_SET = {
     1: {
         cardId: 1,

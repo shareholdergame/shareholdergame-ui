@@ -20,11 +20,16 @@
     }
 
     function handleChange(event) {
-        let newValue = parseInt(event.target.value);
-        if (newValue !== share.amount) {
+        if (value !== share.amount) {
+            if (value > share.amount + share.canBuy) {
+                value = share.amount + share.canBuy
+            } else if (value < share.lockedAmount) {
+                value = share.lockedAmount
+            }
+
             dispatch('buysell', {
                 shareId: share.id,
-                buySellAmount: newValue - share.amount > 0 ? 1 : -1
+                buySellAmount: value - share.amount
             })
         }
     }
@@ -38,7 +43,7 @@
     }
 
     function sellAll(event) {
-        let buySellValue = -(share.amount - share.lockedAmount)
+        let buySellValue = share.lockedAmount - share.amount
         value = value + buySellValue
         dispatch('buysell', {
             shareId: share.id,
