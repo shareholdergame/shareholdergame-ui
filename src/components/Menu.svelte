@@ -41,7 +41,7 @@
             <li><button class="btn btn-outline-secondary" on:click={onSignOut}>Sign Out</button></li>
         {:else}
             <li><a class="nav-link" href="/signin">Sign In</a></li>
-            <!--<li><a class="nav-link" href="/signup">Sign Up</a></li>-->
+            <li><a class="nav-link" href="/signup">Sign Up</a></li>
         {/if}
     </ul>
 </nav>

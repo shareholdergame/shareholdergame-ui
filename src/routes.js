@@ -13,6 +13,7 @@ import PlayersPage from './views/secured/PlayersPage.svelte'
 import ProfilePage from './views/secured/ProfilePage.svelte'
 import AchievementsPage from './views/secured/AchievementsPage.svelte'
 import AboutPage from './views/public/AboutPage.svelte'
+import ConfirmationPage from './views/public/ConfirmationPage.svelte'
 
 let is_authenticated = false;
 
@@ -44,6 +45,10 @@ const routes = [
     {
         name: 'about',
         component: AboutPage
+    },
+    {
+        name: 'verification/:verificationcode',
+        component: ConfirmationPage
     },
     {
         name: 'secure',

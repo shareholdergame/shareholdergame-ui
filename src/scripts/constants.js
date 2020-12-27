@@ -60,4 +60,4 @@ export const StepType = {
     REPURCHASE_STEP: 'REPURCHASE_STEP'
 }
 
-export const REFRESH_INTERVAl = 15000
+export const REFRESH_INTERVAl = 10000

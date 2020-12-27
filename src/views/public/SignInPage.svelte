@@ -1,7 +1,7 @@
 <script>
+    import {navigateTo} from 'svelte-router-spa'
     import {errorMessage} from "../../stores";
     import {authenticate} from '../../auth.js';
-    import {navigateTo} from 'svelte-router-spa'
 
     export let currentRoute
     export let params = {}
@@ -9,7 +9,7 @@
     let userNameOrEmail = '';
     let password = '';
 
-    function signIn() {
+    function onSignIn() {
         authenticate(userNameOrEmail, password, function () {
             navigateTo('/secure/home')
         });
@@ -39,7 +39,7 @@
                 <input bind:value={password} type="password" id="userPassword" class="form-control"
                        placeholder="Enter your password"/>
             </div>
-            <button type="submit" class="btn btn-primary" on:click={signIn}>Sign In</button>
+            <button type="submit" class="btn btn-primary" on:click={onSignIn}>Sign In</button>
         </div>
     </div>
 </div>
