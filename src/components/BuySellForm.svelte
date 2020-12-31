@@ -26,6 +26,7 @@
             for (const shareId in shares) {
                 if (shares.hasOwnProperty(shareId)) {
                     shares[shareId].canBuy = calculateCanBuy(playerPosition.cash, sharePrices[shareId].price)
+                    shares[shareId].total = shares[shareId].amount * sharePrices[shareId].price
                 }
             }
         }

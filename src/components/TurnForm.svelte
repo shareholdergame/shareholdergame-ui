@@ -212,6 +212,8 @@
         for (const shareId of SHARES) {
             currentPosition.playerPositions[currentPosition.myTurnOrder].shares[shareId].canBuy =
                 calculateCanBuy(currentPosition.playerPositions[currentPosition.myTurnOrder].cash, sharePrices[shareId].price)
+            currentPosition.playerPositions[currentPosition.myTurnOrder].shares[shareId].total =
+                currentPosition.playerPositions[currentPosition.myTurnOrder].shares[shareId].amount * sharePrices[shareId].price
         }
         if (currentStep === StepType.FIRST_BUY_SELL_STEP) {
             firstBuySellForm.reset()

@@ -89,6 +89,7 @@ export function recalculateTotal(currentPosition) {
             playerPosition.total = calculateTotal(playerPosition.shares, playerPosition.cash, currentPosition.sharePrices)
             for (const shareId of SHARES) {
                 playerPosition.shares[shareId].canBuy = calculateCanBuy(playerPosition.cash, currentPosition.sharePrices[shareId].price)
+                playerPosition.shares[shareId].total = playerPosition.shares[shareId].amount * currentPosition.sharePrices[shareId].price
             }
         }
     }
@@ -225,7 +226,8 @@ function buildShares(step, sharePrices) {
                 canBuy: calculateCanBuy(step.cash, sharePrices[shareId].price),
                 initialAmount: step.shares[shareId].amount,
                 lockedAmount: 0,
-                repurchased: false
+                repurchased: false,
+                total: (step.shares[shareId].amount * sharePrices[shareId].price)
             }
         }
     }

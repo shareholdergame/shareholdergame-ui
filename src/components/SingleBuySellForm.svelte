@@ -10,7 +10,8 @@
         amount: 0,
         canBuy: 0,
         initialAmount: 0,
-        lockedAmount: 0
+        lockedAmount: 0,
+        total: 0
     }
 
     let value = share.amount
@@ -68,5 +69,8 @@
     {#if share.canBuy > 0}
         <button on:click={buyAll} class="btn btn-secondary">+ {share.canBuy}</button>
     {/if}
+</div>
+<div>
+    <span class="text-black-50"><em>{share.total}</em></span>
 </div>
 

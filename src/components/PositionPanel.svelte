@@ -34,7 +34,7 @@
         {#each Object.entries(currentPosition.playerPositions) as [turnOrder, playerPosition]}
             <div class="col-md-1">
                 {#each Object.entries(playerPosition.shares) as [shareId, share]}
-                    <div>{share.amount}</div>
+                    <div>{share.amount}&nbsp;&nbsp;<span class="text-black-50"><small><em>{share.total}</em></small></span> </div>
                 {/each}
             </div>
         {/each}
