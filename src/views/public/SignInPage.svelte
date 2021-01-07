@@ -1,4 +1,5 @@
 <script>
+    import { onMount } from 'svelte';
     import {navigateTo} from 'svelte-router-spa'
     import {errorMessage} from "../../stores";
     import {authenticate} from '../../auth.js';
@@ -14,6 +15,10 @@
             navigateTo('/secure/home')
         });
     }
+
+    onMount(() => {
+        errorMessage.set('')
+    })
 </script>
 
 <svelte:head>
@@ -40,6 +45,9 @@
                        placeholder="Enter your password"/>
             </div>
             <button type="submit" class="btn btn-primary" on:click={onSignIn}>Sign In</button>
+            <div class="flex-grow-1 text-right">
+                <a href="/resetpassword">Forgot password?</a>
+            </div>
         </div>
     </div>
 </div>

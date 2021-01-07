@@ -60,7 +60,7 @@ export function isMe(name) {
     return userName.toLowerCase() === name.toLowerCase()
 }
 
-async function getAccountDetails(successCallback) {
+export async function getAccountDetails(successCallback) {
     let url = API_BASE_URL+ '/account'
 
     let response = await fetch(url, {

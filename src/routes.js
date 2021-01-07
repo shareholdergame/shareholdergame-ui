@@ -14,6 +14,9 @@ import ProfilePage from './views/secured/ProfilePage.svelte'
 import AchievementsPage from './views/secured/AchievementsPage.svelte'
 import AboutPage from './views/public/AboutPage.svelte'
 import ConfirmationPage from './views/public/ConfirmationPage.svelte'
+import ResetPasswordPage from './views/public/ResetPasswordPage.svelte'
+import EditAccountPage from './views/secured/EditAccountPage.svelte'
+import ChangePasswordPage from './views/secured/ChangePasswordPage.svelte'
 
 let is_authenticated = false;
 
@@ -49,6 +52,10 @@ const routes = [
     {
         name: 'verification/:verificationcode',
         component: ConfirmationPage
+    },
+    {
+        name: 'resetpassword',
+        component: ResetPasswordPage
     },
     {
         name: 'secure',
@@ -93,6 +100,20 @@ const routes = [
                 name: 'profile',
                 component: ProfilePage,
                 layout: SecuredLayout
+            },
+            {
+                name: 'account',
+                layout: SecuredLayout,
+                nestedRoutes: [
+                    {
+                        name: 'edit',
+                        component: EditAccountPage
+                    },
+                    {
+                        name: 'changepassword',
+                        component: ChangePasswordPage
+                    }
+                ]
             },
             {
                 name: 'player/:playername',
