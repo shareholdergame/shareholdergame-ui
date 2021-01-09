@@ -7,7 +7,8 @@ export async function startNewGame(gameOption, invitedPlayers, successCallback) 
 
     let newGameRequest = {
         cardOption: GAME_OPTIONS[gameOption].cardOption,
-        invitedPlayers: invitedPlayers
+        invitedPlayers: invitedPlayers,
+        playWithComputer: invitedPlayers === null
     }
 
     let response = await fetch(url, {

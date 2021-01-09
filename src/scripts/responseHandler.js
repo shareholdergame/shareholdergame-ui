@@ -1,11 +1,12 @@
 import {navigateTo} from 'svelte-router-spa';
-import { authenticated, user } from '../stores.js'
+import { authenticated, user, errorMessage } from '../stores.js'
 
 export async function handleResponse(response, successCallback) {
     if (response.status === 200) {
         await response.json().then(data => {
             console.log('Request succeeded with JSON response', data)
             if (data.status === 'OK') {
+                errorMessage.set('')
                 successCallback(data.body);
             } else {
                 alert(data.body.message)

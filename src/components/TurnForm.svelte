@@ -80,6 +80,7 @@
     let lastBuySellForm
     let resetFirstBuySellStepBtn
     let resetLastBuySellStepBtn
+    let doTurnBtn
 
     function isLastTurn() {
         return currentPosition.currentRound === roundsNumber
@@ -120,6 +121,9 @@
 
         currentStep = StepType.LAST_BUY_SELL_STEP
         recalculateTotal(currentPosition)
+
+        doTurnBtn.disabled = false
+
         dispatch('cardapplied', event.detail)
     }
 
@@ -146,9 +150,9 @@
 
         if (!isLastTurn()) {
             copySharesAmount(currentPosition.playerPositions[currentPosition.myTurnOrder].shares, firstStep.shares)
-            currentPosition.playerPositions[currentPosition.myTurnOrder].cash = firstStep.cash
             resetLockedShares(currentPosition.playerPositions[currentPosition.myTurnOrder].shares)
         }
+        currentPosition.playerPositions[currentPosition.myTurnOrder].cash = firstStep.cash
 
         for (const turnOrder in currentPosition.playerPositions) {
             if (currentPosition.playerPositions.hasOwnProperty(turnOrder)
@@ -158,10 +162,10 @@
                         currentPosition.playerPositions[turnOrder].shares[shareId].repurchased = false
                         currentPosition.playerPositions[turnOrder].shares[shareId].amount =
                             currentPosition.playerPositions[turnOrder].shares[shareId].initialAmount
-                        currentPosition.playerPositions[turnOrder].cash =
-                            currentPosition.playerPositions[turnOrder].initialCash
                     }
                 }
+                currentPosition.playerPositions[turnOrder].cash =
+                    currentPosition.playerPositions[turnOrder].initialCash
             }
         }
 
@@ -172,6 +176,9 @@
         turn.cardStep = buildCardStep()
         currentStep = StepType.FIRST_BUY_SELL_STEP
         recalculateTotal(currentPosition)
+
+        doTurnBtn.disabled = true
+
         dispatch('resetcard')
     }
 
@@ -306,6 +313,6 @@
 </div>
 <div class="row mb-3">
     <div class="col-md-10 text-right">
-        <button on:click={doTurn} class="btn btn-primary">Do Turn</button>
+        <button bind:this={doTurnBtn} on:click={doTurn} class="btn btn-primary" disabled>Do Turn</button>
     </div>
 </div>
