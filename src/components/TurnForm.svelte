@@ -99,6 +99,13 @@
     }
 
     function onApplyCard(event) {
+        if (!isLastTurn()) {
+            copySharesAmount(firstStep.shares, currentPosition.playerPositions[currentPosition.myTurnOrder].shares)
+            firstStep.cash = currentPosition.playerPositions[currentPosition.myTurnOrder].cash
+            lockShares(currentPosition.playerPositions[currentPosition.myTurnOrder].shares)
+            resetFirstBuySellStepBtn.disabled = true
+        }
+
         applyCard(event.detail.cardId, event.detail.operations, currentPosition);
 
         turn.cardStep.playerCardId = event.detail.playerCardId
@@ -113,15 +120,9 @@
         cardId = event.detail.cardId
         copySharePrices(priceStep.sharePrices, currentPosition.sharePrices)
         priceStep.cash = currentPosition.playerPositions[currentPosition.myTurnOrder].cash
-
-        if (!isLastTurn()) {
-            lockShares(currentPosition.playerPositions[currentPosition.myTurnOrder].shares)
-            resetFirstBuySellStepBtn.disabled = true
-        }
-
-        currentStep = StepType.LAST_BUY_SELL_STEP
         recalculateTotal(currentPosition)
 
+        currentStep = StepType.LAST_BUY_SELL_STEP
         doTurnBtn.disabled = false
 
         dispatch('cardapplied', event.detail)
@@ -151,12 +152,14 @@
         if (!isLastTurn()) {
             copySharesAmount(currentPosition.playerPositions[currentPosition.myTurnOrder].shares, firstStep.shares)
             resetLockedShares(currentPosition.playerPositions[currentPosition.myTurnOrder].shares)
+            resetFirstBuySellStepBtn.disabled = false
         }
-        currentPosition.playerPositions[currentPosition.myTurnOrder].cash = firstStep.cash
+        currentPosition.playerPositions[currentPosition.myTurnOrder].cash = isLastTurn()
+            ? currentPosition.playerPositions[currentPosition.myTurnOrder].initialCash : firstStep.cash
 
         for (const turnOrder in currentPosition.playerPositions) {
             if (currentPosition.playerPositions.hasOwnProperty(turnOrder)
-                && currentPosition.playerPositions[turnOrder] !== currentPosition.myTurnOrder) {
+                && currentPosition.playerPositions[turnOrder].turnOrder !== currentPosition.myTurnOrder) {
                 for (const shareId of SHARES) {
                     if (currentPosition.playerPositions[turnOrder].shares[shareId].repurchased) {
                         currentPosition.playerPositions[turnOrder].shares[shareId].repurchased = false
@@ -169,14 +172,10 @@
             }
         }
 
-        if (!isLastTurn()) {
-            resetFirstBuySellStepBtn.disabled = false
-        }
-
         turn.cardStep = buildCardStep()
-        currentStep = StepType.FIRST_BUY_SELL_STEP
         recalculateTotal(currentPosition)
 
+        currentStep = StepType.FIRST_BUY_SELL_STEP
         doTurnBtn.disabled = true
 
         dispatch('resetcard')
@@ -186,9 +185,6 @@
         let buySellData = event.detail
         turn.firstBuySellStep[buySellData.shareId] =
             turn.firstBuySellStep[buySellData.shareId] + buySellData.buySellAmount
-
-        copySharesAmount(firstStep.shares, currentPosition.playerPositions[currentPosition.myTurnOrder].shares)
-        firstStep.cash = currentPosition.playerPositions[currentPosition.myTurnOrder].cash
 
         resetFirstBuySellStepBtn.disabled = false
 
