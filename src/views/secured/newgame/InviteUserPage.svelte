@@ -5,30 +5,38 @@
     import { startNewGame } from '../../../scripts/game';
     import { GAME_OPTIONS } from '../../../scripts/constants'
     import InvitePlayerItem from '../../../components/InvitePlayerItem.svelte'
+    import Paginator from "../../../components/Paginator.svelte"
 
     export let currentRoute
     export let params = {}
 
+    let total = 0
+    let offset = 0
+    let itemsPerPage = 21
     let players = []
-    let pagination = []
     let userNamePrefix = ''
 
     const searchUserCallback = function(responseBody) {
-        pagination = responseBody.pagination
+        total = responseBody.pagination.itemsCount
+        offset = responseBody.pagination.offset
         players = responseBody.players
     }
 
-    onMount(() => { searchPlayer('', null, searchUserCallback)})
-
-    function searchUser() {
-        searchPlayer(userNamePrefix, null, searchUserCallback)
-    }
-
-    function selectUser(event) {
+    function selectPlayer(event) {
         let selectedUser = event.detail
         startNewGame(currentRoute.namedParams.gameoption, [selectedUser], function (gameId) {
             navigateTo("/secure/home")
         })
+    }
+
+    function onSelectPage(event) {
+        offset = parseInt(event.detail.offset)
+        itemsPerPage = parseInt(event.detail.ipp)
+        searchPlayer(userNamePrefix, {offset: offset, ipp: itemsPerPage}, searchUserCallback)
+    }
+
+    function onSearchPlayerClick() {
+        searchPlayer(userNamePrefix, {offset: offset, ipp: itemsPerPage}, searchUserCallback)
     }
 
     function onPlayWithComputer(event) {
@@ -36,6 +44,8 @@
             navigateTo("/secure/playgame/" + gameId)
         })
     }
+
+    onMount(() => { searchPlayer('', {offset: offset, ipp: itemsPerPage}, searchUserCallback)})
 </script>
 
 <svelte:head>
@@ -64,15 +74,18 @@
                 <label for="userNamePrefix">User name</label>
                 <input type="text" id="userNamePrefix" class="form-control ml-3 flex-grow-1" bind:value={userNamePrefix}
                        placeholder="Type at least 3 letters..."/>
-                <button type="submit" class="btn btn-primary ml-3" on:click={searchUser}>Search</button>
+                <button type="submit" class="btn btn-primary ml-3" on:click={onSearchPlayerClick}>Search</button>
             </div>
         </div>
     </div>
     <div class="row row-cols-1 row-cols-md-3">
         {#each players as player}
             <div class="col-4">
-                <InvitePlayerItem player={player} on:selectuser={selectUser}/>
+                <InvitePlayerItem player={player} on:selectuser={selectPlayer}/>
             </div>
         {/each}
+    </div>
+    <div class="row justify-content-md-center">
+        <Paginator itemsPerPage={itemsPerPage} totalItems={total} offset={offset} on:selectpage={onSelectPage}/>
     </div>
 </div>

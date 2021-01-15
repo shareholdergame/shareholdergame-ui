@@ -3,16 +3,48 @@
     import {getPlayersStatistics} from '../../scripts/player'
     import {GAME_OPTIONS} from "../../scripts/constants";
     import PlayerNameLink from '../../components/PlayerNameLink.svelte'
+    import Paginator from "../../components/Paginator.svelte"
 
     export let currentRoute
     export let params = {}
 
+    let total = 0
+    let offset = 0
+    let itemsPerPage = 10
     let playerStatistics = []
 
     function refreshPlayerStatistics() {
-        getPlayersStatistics('game_4x6', {offset: 0, ipp: 20}, function (playerStatisticsResponse) {
+        getPlayersStatistics('game_4x6', {offset: offset, ipp: itemsPerPage}, function (playerStatisticsResponse) {
+            total = playerStatisticsResponse.pagination.itemsCount
+            offset = playerStatisticsResponse.pagination.offset
             playerStatistics = playerStatisticsResponse.items
         })
+    }
+
+    function onSelectPage(event) {
+        offset = parseInt(event.detail.offset)
+        itemsPerPage = parseInt(event.detail.ipp)
+        refreshPlayerStatistics()
+    }
+
+    function convertDaysToDescription(days) {
+        if (days === 0) {
+            return 'Now'
+        } else if (days < 0) {
+            return 'Never'
+        } else if (days >= 7 && days < 14) {
+            return 'A week ago'
+        } else if (days >= 14 && days < 30) {
+            return 'Two weeks ago'
+        } else if (days >= 30 && days < 90) {
+            return 'Month ago'
+        } else if (days >= 90 && days < 365) {
+            return '3 months ago'
+        } else if (days >= 365) {
+            return 'A year ago'
+        } else {
+            return days + ' days'
+        }
     }
 
     onMount(() => {
@@ -43,17 +75,17 @@
         <table class="table table-striped">
             <thead>
             <tr>
-                <th scope="col">Player</th>
-                <th scope="col">Total played</th>
-                <th scope="col">Win</th>
-                <th scope="col">Draw</th>
-                <th scope="col">Bankrupts</th>
-                <th scope="col">Win percent</th>
-                <th scope="col">Max result</th>
-                <th scope="col">Max won sum</th>
-                <th scope="col">Total won sum</th>
-                <th scope="col">Last play</th>
-                <th scope="col">Last visit</th>
+                <th class="text-center" scope="col">Player</th>
+                <th class="text-center" scope="col">Total played</th>
+                <th class="text-center" scope="col">Win</th>
+                <th class="text-center" scope="col">Draw</th>
+                <th class="text-center" scope="col">Bankrupts</th>
+                <th class="text-center" scope="col">Win percent</th>
+                <th class="text-center" scope="col">Max result</th>
+                <th class="text-center" scope="col">Max won sum</th>
+                <th class="text-center" scope="col">Total won sum</th>
+                <th class="text-center" scope="col">Last play</th>
+                <th class="text-center" scope="col">Last visit</th>
             </tr>
             </thead>
             <tbody>
@@ -74,11 +106,14 @@
                             {playerStat.achievements.totalWonSum.toLocaleString('en-US')}
                         </span>
                     </td>
-                    <td class="text-center">{playerStat.playerSession.lastPlay}</td>
-                    <td class="text-center">{playerStat.playerSession.lastVisit}</td>
+                    <td class="text-center">{convertDaysToDescription(playerStat.playerSession.lastPlay)}</td>
+                    <td class="text-center">{convertDaysToDescription(playerStat.playerSession.lastVisit)}</td>
                 </tr>
             {/each}
             </tbody>
         </table>
+    </div>
+    <div class="row justify-content-md-center">
+        <Paginator itemsPerPage={itemsPerPage} totalItems={total} offset={offset} on:selectpage={onSelectPage}/>
     </div>
 </div>

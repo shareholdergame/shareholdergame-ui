@@ -84,7 +84,7 @@
                 <tr>
                     <th>Игра</th>
                     <th style="text-align: center">Партия</th>
-                    <th style="text-align: center">Текущий Ход</th>
+                    <th style="text-align: center">Последний Ход</th>
                 </tr>
                 {#each whoPlaysNow as item}
                     <tr>

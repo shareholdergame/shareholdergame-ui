@@ -21,7 +21,6 @@
                         переносить горечь поражений.</p>
                     <hr class="intro-divider">
                     <a href="/secure/home" class="btn btn-primary btn-lg active" style="width: 200px" role="button" aria-pressed="true">Play</a>
-                    <a href="https://shareholdergame.com/game.html" class="btn btn-primary" style="width: 200px" role="link">Old Version (Adobe Flash required)</a>
                     {#if !$authenticated}
                         <a href="/signup" class="btn btn-secondary btn-lg active" style="width: 200px" role="button" aria-pressed="true">Sign Up</a>
                     {/if}

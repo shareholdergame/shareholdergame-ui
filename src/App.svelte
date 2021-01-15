@@ -8,6 +8,7 @@
     import Menu from './components/Menu.svelte'
 
     let is_authenticated = false;
+    let refreshStarted = false
 
     authenticated.subscribe(value => {
         is_authenticated = value;
@@ -28,10 +29,16 @@
     }
 
     function startRefresh() {
-        interval = setInterval(checkMessagesQueue, REFRESH_INTERVAl)
+        if (!refreshStarted) {
+            interval = setInterval(checkMessagesQueue, REFRESH_INTERVAl)
+            refreshStarted = true
+        }
     }
     function stopRefresh() {
-        clearInterval(interval);
+        if (refreshStarted) {
+            clearInterval(interval);
+            refreshStarted = false
+        }
     }
 
     window.addEventListener('focus', startRefresh);

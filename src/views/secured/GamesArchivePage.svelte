@@ -4,15 +4,21 @@
     import GameItem from '../../components/GameItem.svelte'
     import {getMyGames} from "../../scripts/game";
     import {GameStatus} from "../../scripts/constants";
+    import Paginator from "../../components/Paginator.svelte"
 
     export let currentRoute
     export let params = {}
 
+    let total = 0
+    let offset = 0
+    let itemsPerPage = 21
     let games = []
 
     function refreshGamesList() {
-        getMyGames('all', GameStatus.FINISHED, {offset: 0, ipp: 21}, function (gamesList) {
+        getMyGames('all', GameStatus.FINISHED, {offset: offset, ipp: itemsPerPage}, function (gamesList) {
             console.log(JSON.stringify(gamesList))
+            total = gamesList.pagination.itemsCount
+            offset = gamesList.pagination.offset
             games = gamesList.items
         })
     }
@@ -20,6 +26,12 @@
     function showPlayGamePage(event) {
         let gameId = event.detail.id
         navigateTo('/secure/playgame/' + gameId)
+    }
+
+    function onSelectPage(event) {
+        offset = parseInt(event.detail.offset)
+        itemsPerPage = parseInt(event.detail.ipp)
+        refreshGamesList()
     }
 
     onMount(() => {
@@ -43,5 +55,8 @@
                 <GameItem gameSet="{game}" on:view={showPlayGamePage}/>
             </div>
         {/each}
+    </div>
+    <div class="row justify-content-md-center">
+        <Paginator itemsPerPage={itemsPerPage} totalItems={total} offset={offset} on:selectpage={onSelectPage}/>
     </div>
 </div>
