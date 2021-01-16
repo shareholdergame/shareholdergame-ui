@@ -2,10 +2,6 @@ import {StepType} from './constants'
 import {MAX_PRICE, MIN_PRICE, PRICE_STEP, CARD_SET, SHARES} from './gameDescription'
 import {isMe} from '../auth.js';
 
-export function buildGameHeader(gameSet) {
-    return '' //todo - implement
-}
-
 export function getCurrentPosition(game, options) {
     let players = game.players
     let rounds = game.rounds

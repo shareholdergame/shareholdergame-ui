@@ -78,19 +78,19 @@
                 <GameItem gameSet="{game}" on:play={showPlayGamePage}/>
             {/each}
         </div>
-        <div class="col-sm">
+        <div class="col-sm overflow-auto">
             <h4>Now playing</h4>
             <table class="table">
                 <tr>
                     <th>Игра</th>
-                    <th style="text-align: center">Партия</th>
-                    <th style="text-align: center">Последний Ход</th>
+                    <th class="text-center">Партия</th>
+                    <th class="text-center">Последний Ход</th>
                 </tr>
                 {#each whoPlaysNow as item}
                     <tr>
                         <td>{item.gameLabel}</td>
-                        <td style="text-align: center">{item.gameLetter}</td>
-                        <td style="text-align: center">
+                        <td class="text-center">{item.gameLetter}</td>
+                        <td class="text-center">
                             {#if item.round === 0}
                                 Нет ходов
                             {:else}

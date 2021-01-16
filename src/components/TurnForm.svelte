@@ -173,6 +173,8 @@
         }
 
         turn.cardStep = buildCardStep()
+        turn.lastBuySellStep = buildBuySellStep()
+        lastBuySellForm.reset()
         recalculateTotal(currentPosition)
 
         currentStep = StepType.FIRST_BUY_SELL_STEP

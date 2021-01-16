@@ -34,6 +34,7 @@
             refreshStarted = true
         }
     }
+
     function stopRefresh() {
         if (refreshStarted) {
             clearInterval(interval);

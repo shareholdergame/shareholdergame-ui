@@ -16,7 +16,6 @@
         pagesCount = Math.ceil(totalItems / itemsPerPage)
         currentPage = (offset / itemsPerPage) + 1
         visibleRange = recalculateVisibleRange(pagesCount, currentPage)
-        console.log(visibleRange)
     }
 
     function onFirstPageClick(event) {

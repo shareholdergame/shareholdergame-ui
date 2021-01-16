@@ -42,7 +42,6 @@
                 rounds = game.rounds
                 if (game.status === GameStatus.RUNNING) {
                     currentPosition = getCurrentPosition(game, options)
-                    console.log(JSON.stringify(currentPosition))
                 }
             } else {
                 console.log('ERROR!') //todo - remove it
@@ -82,6 +81,13 @@
     <div class="row pt-3 pb-3">
         <div class="col-md-4 text-center align-middle">
             <GameHeader options="{options}" game="{game}"/>
+            {#if gameSet.games !== undefined}
+                {#each gameSet.games as _game}
+                    {#if _game.letter !== game.letter}
+                        <button type="button" class="btn btn-link btn-lg" on:click={refreshGameReport(_game.id)}>Game {_game.letter}</button>
+                    {/if}
+                {/each}
+            {/if}
         </div>
         <div class="col-md-8">
             {#if game.status === GameStatus.RUNNING}
