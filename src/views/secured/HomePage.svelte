@@ -58,7 +58,7 @@
     <title>Game Stockholder - Home</title>
 </svelte:head>
 
-<div class="container-fluid">
+<div class="container-fluid mh-100">
     <div class="row justify-content-md-center pt-4 pb-4">
         <div class="col-4">
             <button type="button" class="btn btn-primary btn-lg btn-block" on:click={onStartNewGame}>Start New Game</button>

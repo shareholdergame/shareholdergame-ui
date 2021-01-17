@@ -1,5 +1,6 @@
 <script>
     import { onMount } from 'svelte'
+    import Modal from "sv-bootstrap-modal"
     import {currentPath} from "../../stores";
     import { getGameReport, makeTurn } from '../../scripts/game'
     import {getCurrentPosition} from '../../scripts/playGamePageMediator'
@@ -23,8 +24,10 @@
     let currentPosition = {}
     let roundsNumber = 0
 
+    let isOpen = false
     let positionPanel
     let turnForm
+    let resultForForum = ''
 
     function refreshGameReport(gameId) {
         getGameReport(gameId, function (_gameSet) {
@@ -71,6 +74,45 @@
         let gameId = parseInt(event.detail)
         refreshGameReport(gameId)
     }
+
+    function onResultForForumClick(event) {
+        console.log(JSON.stringify(players))
+        isOpen = true
+        resultForForum = '[table][tr][th colspan=' + (game.players.length + 1) + ']'
+        for (const player of players) {
+            resultForForum += player.player.name
+            resultForForum += ' - '
+        }
+        resultForForum += options.cardOption.major + ' x ' + options.cardOption.minor
+        resultForForum += '[/th][/tr]'
+        for (const _game of games) {
+            if (_game.status === GameStatus.FINISHED) {
+                resultForForum += '[tr][td] Партия ' + _game.letter + ' [/td]'
+                for (const _result of _game.result) {
+                    resultForForum += '[td][b]' + _result.result.name + '[/b] - ' + _result.result.totalFunds + '[/td]'
+                }
+                resultForForum += '[/tr]'
+            }
+        }
+        resultForForum += '[tr][td] Результат игры [/td]'
+        for (const _result1 of gameSet.result) {
+            resultForForum += '[td][b]' + _result1.name + ' \n' + _result1.totalPoints + '[/b]'
+            if (_result1.fundsDifference > 0) {
+                resultForForum += '(+' + _result1.fundsDifference + ')'
+            }
+            resultForForum += '[/td]'
+        }
+        resultForForum += '[/tr]'
+        resultForForum += '[/table]'
+    }
+
+    function onCopyAndClose(event) {
+        isOpen = false;
+        let copyText = document.getElementById("resultForForumArea");
+        copyText.select();
+        copyText.setSelectionRange(0, 99999);
+        document.execCommand("copy");
+    }
 </script>
 
 <svelte:head>
@@ -94,6 +136,7 @@
                 <PositionPanel bind:this={positionPanel} currentPosition="{currentPosition}"/>
             {:else if game.status === GameStatus.FINISHED}
                 <ResultPanel gameSet="{gameSet}" on:gamereport={onGameReport}/>
+                <button class="btn btn-info" on:click={onResultForForumClick}>Result for Forum</button>
             {/if}
         </div>
     </div>
@@ -105,3 +148,21 @@
     {/if}
     <CardSetPanel players="{game.players}" gameStatus="{game.status}"/>
 </div>
+
+<Modal bind:open={isOpen}>
+    <div class="modal-header">
+        <h5 class="modal-title">Export Game Set Result in Forum Format</h5>
+        <button type="button" class="close" on:click={() => (isOpen = false)}>
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <form>
+            <label for="resultForForumArea">Game Set Result</label>
+            <textarea class="form-control" id="resultForForumArea" cols="100" rows="10">{resultForForum}</textarea>
+        </form>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-primary" on:click={onCopyAndClose}>Copy to clipboard and Close</button>
+    </div>
+</Modal>
