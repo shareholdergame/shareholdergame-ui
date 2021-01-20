@@ -60,16 +60,16 @@
         </div>
     </div>
     <div class="row mb-3">
-        <div class="col-4 d-inline-flex">
+        <div class="col-sm-4 d-inline-flex">
             <h4>Select user to play</h4>
             <div class="flex-grow-1">
                 <h4 class="text-center">&#45;&#45; OR &#45;&#45;</h4>
             </div>
+        </div>
+        <div class="col-sm-4">
             <button type="button" class="btn btn-secondary" on:click={onPlayWithComputer}>Play With Computer</button>
         </div>
-        <div class="col-4">
-        </div>
-        <div class="col-4 d-inline-flex">
+        <div class="col-sm-4 d-inline-flex">
             <div class="input-group w-100 d-flex">
                 <label for="userNamePrefix">User name</label>
                 <input type="text" id="userNamePrefix" class="form-control ml-3 flex-grow-1" bind:value={userNamePrefix}
@@ -78,9 +78,9 @@
             </div>
         </div>
     </div>
-    <div class="row row-cols-1 row-cols-md-3">
+    <div class="row row-cols-1 row-cols-sm-3">
         {#each players as player}
-            <div class="col-4">
+            <div class="col-sm-4">
                 <InvitePlayerItem player={player} on:selectuser={selectPlayer}/>
             </div>
         {/each}

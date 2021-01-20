@@ -7,7 +7,7 @@
 {#if round !== undefined && round.turns !== undefined}
     {#each round.turns as turn}
         <div class="row border-bottom">
-            <div class="col-md-1 text-center color-turn-{turn.turn} bgcolor-turn-{turn.turn}">
+            <div class="col-sm-1 text-center color-turn-{turn.turn} bgcolor-turn-{turn.turn}">
                 <strong>{turn.round}.{turn.turn}</strong>
             </div>
             <TurnItem turn="{turn}"/>

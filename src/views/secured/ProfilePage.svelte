@@ -58,15 +58,8 @@
     </div>
     {#if account !== undefined && profile !== undefined}
         <div class="row">
-            <div class="col">
+            <div class="col-sm">
                 <h3>Account</h3>
-            </div>
-            <div class="col">
-                <h3>Profile</h3>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col">
                 <table class="table table-borderless">
                     <tr>
                         <td>Email:</td>
@@ -85,8 +78,13 @@
                         <td>{account.status}</td>
                     </tr>
                 </table>
+                <div>
+                    <button class="btn btn-primary" on:click={onEditAccountClick}>Edit Account</button>
+                    <button class="btn btn-primary" on:click={onChangePasswordClick}>Change Password</button>
+                </div>
             </div>
-            <div class="col">
+            <div class="col-sm">
+                <h3>Profile</h3>
                 <table class="table table-borderless">
                     <tr>
                         <td>Country:</td>
@@ -101,14 +99,6 @@
                         <td>{profile.playerWithLocation.location.city}</td>
                     </tr>
                 </table>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col">
-                <button class="btn btn-primary" on:click={onEditAccountClick}>Edit Account</button>
-                <button class="btn btn-primary" on:click={onChangePasswordClick}>Change Password</button>
-            </div>
-            <div class="col">
                 <!--<button class="btn btn-primary" on:click={onEditProfileClick}>Edit</button>-->
             </div>
         </div>

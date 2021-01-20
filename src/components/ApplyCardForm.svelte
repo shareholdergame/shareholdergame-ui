@@ -29,15 +29,18 @@
         let playerCard = cardRows[selectedPlayerCardId].getPlayerCard()
         let operations = {}
         for (const shareId of SHARES) {
-            if (cellStatuses[shareId].selected) {
+            if (cellStatuses[shareId].operations[0].shareId !== 0) {
+                operations[shareId] = cellStatuses[shareId].operations[0]
+            } else {
                 if (cellStatuses[shareId].operations.length > 1) {
+                    if (!cellStatuses[shareId].selected) {
+                        return
+                    }
                     let selectedOperand = cellStatuses[shareId].selectedOperand
                     operations[shareId] = getOperationByOperandValue(cellStatuses[shareId].operations, selectedOperand)
                 } else {
                     operations[shareId] = cellStatuses[shareId].operations[0]
                 }
-            } else if (cellStatuses[shareId].operations[0].shareId !== 0) {
-                operations[shareId] = cellStatuses[shareId].operations[0]
             }
         }
 

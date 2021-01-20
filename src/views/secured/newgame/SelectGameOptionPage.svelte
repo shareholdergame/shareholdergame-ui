@@ -11,13 +11,13 @@
 
 <div class="container-fluid">
     <div class="row mb-3 mt-3">
-        <div class="col">
+        <div class="col-sm">
             <h2>Select Game Option:</h2>
         </div>
     </div>
     <div class="row">
         {#each Object.entries(GAME_OPTIONS) as [gameOptionName, gameOption]}
-            <div class="col-6">
+            <div class="col-sm-6">
                 <div class="card">
                     <div class="card-body">
                         <h2 class="card-title display-1">{gameOption.title}</h2>

@@ -45,13 +45,13 @@
 
 <div class="container-fluid">
     <div class="row mb-3 mt-3">
-        <div class="col">
+        <div class="col-sm">
             <h2>Games Archive</h2>
         </div>
     </div>
-    <div class="row row-cols-1 row-cols-md-3">
+    <div class="row row-cols-1 row-cols-sm-3">
         {#each games as game}
-            <div class="col-4">
+            <div class="col-sm-4">
                 <GameItem gameSet="{game}" on:view={showPlayGamePage}/>
             </div>
         {/each}

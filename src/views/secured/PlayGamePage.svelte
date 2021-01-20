@@ -121,7 +121,7 @@
 
 <div class="container-fluid">
     <div class="row pt-3 pb-3">
-        <div class="col-md-4 text-center align-middle">
+        <div class="col-sm-4 text-center align-middle">
             <GameHeader options="{options}" game="{game}"/>
             {#if gameSet.games !== undefined}
                 {#each gameSet.games as _game}
@@ -131,7 +131,7 @@
                 {/each}
             {/if}
         </div>
-        <div class="col-md-8">
+        <div class="col-sm-8">
             {#if game.status === GameStatus.RUNNING}
                 <PositionPanel bind:this={positionPanel} currentPosition="{currentPosition}"/>
             {:else if game.status === GameStatus.FINISHED}

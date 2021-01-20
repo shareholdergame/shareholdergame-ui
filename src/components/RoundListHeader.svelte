@@ -3,10 +3,10 @@
 </script>
 
 <div class="row bg-light">
-    <div class="col-md-1 text-center">
+    <div class="col-sm-1 text-center">
         <small>Round / Turn</small>
     </div>
-    <div class="col-md-3">
+    <div class="col-sm-3">
         <table class="w-100">
             <tr>
                 {#each SHARES as shareId}
@@ -16,7 +16,7 @@
             </tr>
         </table>
     </div>
-    <div class="col-md-4">
+    <div class="col-sm-4">
         <table class="w-100">
             <tr>
                 <td class="w-20 text-center">Card</td>
@@ -27,7 +27,7 @@
             </tr>
         </table>
     </div>
-    <div class="col-md-3">
+    <div class="col-sm-3">
         <table class="w-100">
             <tr>
                 {#each SHARES as shareId}
@@ -37,7 +37,7 @@
             </tr>
         </table>
     </div>
-    <div class="col-md-1 text-center">
+    <div class="col-sm-1 text-center">
         Total
     </div>
 </div>
