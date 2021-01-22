@@ -1,6 +1,6 @@
 <script>
     import { createEventDispatcher } from 'svelte';
-    import { SHARES, CARD_SET, hasOperationForShare, getOperationsForShare, formatOperation } from '../scripts/gameDescription'
+    import { SHARES, CARD_SET } from '../scripts/gameDescription'
     import CardRow, {deSelect} from './CardRow.svelte'
 
     const dispatch = createEventDispatcher();
@@ -29,18 +29,15 @@
         let playerCard = cardRows[selectedPlayerCardId].getPlayerCard()
         let operations = {}
         for (const shareId of SHARES) {
-            if (cellStatuses[shareId].operations[0].shareId !== 0) {
-                operations[shareId] = cellStatuses[shareId].operations[0]
-            } else {
+            if (cellStatuses[shareId].selected) {
                 if (cellStatuses[shareId].operations.length > 1) {
-                    if (!cellStatuses[shareId].selected) {
-                        return
-                    }
                     let selectedOperand = cellStatuses[shareId].selectedOperand
                     operations[shareId] = getOperationByOperandValue(cellStatuses[shareId].operations, selectedOperand)
                 } else {
                     operations[shareId] = cellStatuses[shareId].operations[0]
                 }
+            } else if (cellStatuses[shareId].operations.length > 1) {
+                return
             }
         }
 

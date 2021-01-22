@@ -16,8 +16,10 @@
         maxSelections = nonAssignedOperations.length
         for (const shareId of SHARES) {
             let operations = getOperationsForShare(card, shareId)
+            let fixedColor = operations.length === 1 && operations[0].shareId !== 0
             cellStatuses[shareId] = {
-                selected: false,
+                fixedColor: fixedColor,
+                selected: fixedColor,
                 selectedOperand: '',
                 shareId: shareId,
                 operations: (operations.length > 0 ? operations : nonAssignedOperations)
@@ -31,9 +33,11 @@
         for (const shareId of SHARES) {
             if (selectedShareId !== shareId) {
                 if (maxSelections < 2) {
-                    cellStatuses[shareId].selected = false
+                    if (!cellStatuses[shareId].fixedColor) {
+                        cellStatuses[shareId].selected = false
+                    }
                 } else {
-                    if (cellStatuses[shareId].selectedOperand === selectedOperand) {
+                    if (cellStatuses[shareId].selectedOperand === selectedOperand && !cellStatuses[shareId].fixedColor) {
                         cellStatuses[shareId].selectedOperand = ''
                         cellStatuses[shareId].selected = false
                     }

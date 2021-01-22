@@ -1,10 +1,11 @@
 <script>
     import {createEventDispatcher} from 'svelte';
-    import {CARD_SET, hasOperationForShare, getOperationsForShare, formatOperation} from '../scripts/gameDescription'
+    import {formatOperation} from '../scripts/gameDescription'
 
     const dispatch = createEventDispatcher();
 
     export let cellStatus = {
+        fixedColor: false,
         selected: false,
         selectedOperand: '',
         shareId: 0,
