@@ -64,7 +64,6 @@
     {#each playerCards as playerCard}
         {#if CARD_SET.hasOwnProperty(playerCard.cardId) && !playerCard.applied}
             <tr>
-                <td class="w-20"></td>
                 <CardRow bind:this={cardRows[playerCard.id]} playerCard={playerCard} on:cardselected={cardSelected}/>
                 <td class="w-20"></td>
             </tr>

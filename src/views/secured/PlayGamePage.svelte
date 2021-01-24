@@ -76,7 +76,6 @@
     }
 
     function onResultForForumClick(event) {
-        console.log(JSON.stringify(players))
         isOpen = true
         resultForForum = '[table][tr][th colspan=' + (game.players.length + 1) + ']'
         for (const player of players) {
@@ -131,7 +130,7 @@
                 {/each}
             {/if}
         </div>
-        <div class="col-sm-8">
+        <div class="col-sm-6">
             {#if game.status === GameStatus.RUNNING}
                 <PositionPanel bind:this={positionPanel} currentPosition="{currentPosition}"/>
             {:else if game.status === GameStatus.FINISHED}
@@ -139,6 +138,7 @@
                 <button class="btn btn-info" on:click={onResultForForumClick}>Result for Forum</button>
             {/if}
         </div>
+        <div class="col-sm-2"></div>
     </div>
     <RoundsList rounds="{rounds}"/>
     {#if currentPosition.myTurnOrder === currentPosition.currentTurn && game.status === GameStatus.RUNNING}

@@ -279,7 +279,8 @@
             </div>
         {/if}
     </div>
-    <div class="col-md-4">
+    <div class="col-md-1"></div>
+    <div class="col-md-3">
         {#if currentStep === StepType.FIRST_BUY_SELL_STEP && currentPosition.hasOwnProperty('playerPositions')}
             <ApplyCardForm playerCards={currentPosition.playerPositions[currentPosition.myTurnOrder].playerCards}
                            cash={currentPosition.playerPositions[currentPosition.myTurnOrder].cash}

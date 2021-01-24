@@ -10,53 +10,55 @@
     }
 </script>
 
-<div class="row">
-    <div class="col-md-6">
-        Price
-    </div>
-    {#if currentPosition.hasOwnProperty('playerPositions')}
-        {#each Object.entries(currentPosition.playerPositions) as [turnOrder, playerPosition]}
-            <div class="col-md-1">
-                <PlayerNameLink name="{playerPosition.name}"/>
-            </div>
-        {/each}
-    {/if}
-</div>
-<div class="row" style="margin-bottom: 10px">
-    <div class="col-md-6">
-        {#if currentPosition.hasOwnProperty('sharePrices')}
-            {#each SHARES as shareId}
-                <PriceScale shareId={shareId} currentPosition="{currentPosition}"/>
+<table class="w-100">
+    <tr>
+        <th class="w-50">Price</th>
+        {#if currentPosition.hasOwnProperty('playerPositions')}
+            {#each Object.entries(currentPosition.playerPositions) as [turnOrder, playerPosition]}
+                <th>
+                    <PlayerNameLink name="{playerPosition.name}"/>
+                </th>
             {/each}
         {/if}
-    </div>
-    {#if currentPosition.hasOwnProperty('playerPositions')}
-        {#each Object.entries(currentPosition.playerPositions) as [turnOrder, playerPosition]}
-            <div class="col-md-1">
-                {#each Object.entries(playerPosition.shares) as [shareId, share]}
-                    <div>{share.amount}&nbsp;&nbsp;<span class="text-black-50"><small><em>{share.total}</em></small></span> </div>
-                {/each}
-            </div>
+    </tr>
+    {#if currentPosition.hasOwnProperty('sharePrices')}
+        {#each SHARES as shareId}
+            <tr>
+                <td>
+                    <PriceScale shareId={shareId} currentPosition="{currentPosition}"/>
+                </td>
+                {#if currentPosition.hasOwnProperty('playerPositions')}
+                    {#each Object.entries(currentPosition.playerPositions) as [turnOrder, playerPosition]}
+                        <td>{playerPosition.shares[shareId].amount}&nbsp;&nbsp;
+                            <span class="text-black-50"><small><em>{playerPosition.shares[shareId].total}</em></small></span>
+                        </td>
+                    {/each}
+                {/if}
+            </tr>
         {/each}
     {/if}
-</div>
-<div class="row">
-    <div class="col-md-6 text-right">Cash</div>
-    {#if currentPosition.hasOwnProperty('playerPositions')}
-        {#each Object.entries(currentPosition.playerPositions) as [turnOrder, playerPosition]}
-            <div class="col-md-1">
-                {playerPosition.cash}
-            </div>
-        {/each}
-    {/if}
-</div>
-<div class="row">
-    <div class="col-md-6 text-right">Total</div>
-    {#if currentPosition.hasOwnProperty('playerPositions')}
-        {#each Object.entries(currentPosition.playerPositions) as [turnOrder, playerPosition]}
-            <div class="col-md-1">
-                {playerPosition.total}
-            </div>
-        {/each}
-    {/if}
-</div>
+    <tr>
+        <td class="text-right pr-4">
+            Cash
+        </td>
+        {#if currentPosition.hasOwnProperty('playerPositions')}
+            {#each Object.entries(currentPosition.playerPositions) as [turnOrder, playerPosition]}
+                <td>
+                    {playerPosition.cash}
+                </td>
+            {/each}
+        {/if}
+    </tr>
+    <tr>
+        <td class="text-right pr-4">
+            Total
+        </td>
+        {#if currentPosition.hasOwnProperty('playerPositions')}
+            {#each Object.entries(currentPosition.playerPositions) as [turnOrder, playerPosition]}
+                <td>
+                    {playerPosition.total}
+                </td>
+            {/each}
+        {/if}
+    </tr>
+</table>

@@ -16,12 +16,14 @@
             </tr>
         </table>
     </div>
-    <div class="col-sm-4">
+    <div class="col-sm-1 text-center">
+        Card
+    </div>
+    <div class="col-sm-3">
         <table class="w-100">
             <tr>
-                <td class="w-20 text-center">Card</td>
                 {#each SHARES as shareId}
-                    <td class="w-15 text-center game-card-cell-color share-color-{shareId}">100</td>
+                    <td class="w-20 text-center game-card-cell-color share-color-{shareId}">100</td>
                 {/each}
                 <td class="w-20 text-center">Cash</td>
             </tr>
