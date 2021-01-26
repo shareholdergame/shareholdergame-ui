@@ -70,6 +70,6 @@
         {/if}
     {/each}
 </table>
-<div class="text-right">
+<div class="text-center p-2">
     <button bind:this={applyCardBtn} on:click={applyCard} disabled class="btn btn-secondary form-control-sm">Apply</button>
 </div>

@@ -79,3 +79,12 @@ body {
 .share-alt-color-4 {
 	background-color: #bceccf;
 }
+
+@media screen and (min-width : 720px) {
+	#mobile-only {
+		display: none;
+	}
+	#mobile-only-2 {
+		display: none;
+	}
+}

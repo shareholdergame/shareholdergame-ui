@@ -12,10 +12,10 @@
 
 <table class="w-100">
     <tr>
-        <th class="w-50">Price</th>
+        <th class="w-50 text-center">Price</th>
         {#if currentPosition.hasOwnProperty('playerPositions')}
             {#each Object.entries(currentPosition.playerPositions) as [turnOrder, playerPosition]}
-                <th>
+                <th class="text-center" colspan="2">
                     <PlayerNameLink name="{playerPosition.name}"/>
                 </th>
             {/each}
@@ -29,7 +29,10 @@
                 </td>
                 {#if currentPosition.hasOwnProperty('playerPositions')}
                     {#each Object.entries(currentPosition.playerPositions) as [turnOrder, playerPosition]}
-                        <td>{playerPosition.shares[shareId].amount}&nbsp;&nbsp;
+                        <td class="text-right">
+                            {playerPosition.shares[shareId].amount}
+                        </td>
+                        <td class="text-center">
                             <span class="text-black-50"><small><em>{playerPosition.shares[shareId].total}</em></small></span>
                         </td>
                     {/each}
@@ -43,7 +46,7 @@
         </td>
         {#if currentPosition.hasOwnProperty('playerPositions')}
             {#each Object.entries(currentPosition.playerPositions) as [turnOrder, playerPosition]}
-                <td>
+                <td class="text-center" colspan="2">
                     {playerPosition.cash}
                 </td>
             {/each}
@@ -55,7 +58,7 @@
         </td>
         {#if currentPosition.hasOwnProperty('playerPositions')}
             {#each Object.entries(currentPosition.playerPositions) as [turnOrder, playerPosition]}
-                <td>
+                <td class="text-center" colspan="2">
                     {playerPosition.total}
                 </td>
             {/each}

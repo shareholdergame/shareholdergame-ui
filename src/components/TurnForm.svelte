@@ -6,6 +6,7 @@
     import {SHARES} from "../scripts/gameDescription";
     import BuySellStepItem from "./BuySellStepItem.svelte";
     import PriceChangeStepItem from "./PriceChangeStepItem.svelte";
+    import CardItem from './CardItem.svelte'
     import {applyCard, calculateCanBuy, resetPrices, recalculateTotal} from "../scripts/playGamePageMediator";
 
     const dispatch = createEventDispatcher();
@@ -274,32 +275,56 @@
             {:else}
                 <BuySellStepItem step="{firstStep}"/>
             {/if}
-            <div class="text-right">
+            <div class="text-center p-2">
                 <button bind:this={resetFirstBuySellStepBtn} on:click={resetBuySell} disabled class="btn btn-secondary form-control-sm">Reset</button>
             </div>
         {/if}
     </div>
-    <div class="col-md-1"></div>
+    <div class="col-md-1">
+        {#if currentStep === StepType.LAST_BUY_SELL_STEP}
+            <CardItem cardId={cardId}/>
+        {/if}
+    </div>
     <div class="col-md-3">
         {#if currentStep === StepType.FIRST_BUY_SELL_STEP && currentPosition.hasOwnProperty('playerPositions')}
+            <div id="mobile-only">
+                <table class="w-100 mb-1">
+                    <tr>
+                        {#each SHARES as shareId}
+                            <td class="w-20 text-center game-card-cell-color share-color-{shareId}">{currentPosition.sharePrices[shareId].price}</td>
+                        {/each}
+                        <td class="w-20"></td>
+                    </tr>
+                </table>
+            </div>
             <ApplyCardForm playerCards={currentPosition.playerPositions[currentPosition.myTurnOrder].playerCards}
                            cash={currentPosition.playerPositions[currentPosition.myTurnOrder].cash}
                            on:cardapplied={onApplyCard}/>
         {:else}
-            <PriceChangeStepItem cardId="{cardId}" step="{priceStep}"/>
-            <div class="text-right">
+            <PriceChangeStepItem step="{priceStep}"/>
+            <div class="text-center p-2">
                 <button id="resetCardBtn" on:click={resetCard} class="btn btn-secondary form-control-sm">Reset</button>
             </div>
         {/if}
     </div>
     <div class="col-md-3 align-top">
         {#if currentStep === StepType.LAST_BUY_SELL_STEP && !isLastTurn() && currentPosition.hasOwnProperty('playerPositions')}
+            <div id="mobile-only-2">
+                <table class="w-100 mb-1">
+                    <tr>
+                        {#each SHARES as shareId}
+                            <td class="w-20 text-center game-card-cell-color share-color-{shareId}">{currentPosition.sharePrices[shareId].price}</td>
+                        {/each}
+                        <td class="w-20"></td>
+                    </tr>
+                </table>
+            </div>
             <BuySellForm bind:this={lastBuySellForm}
                          step={StepType.LAST_BUY_SELL_STEP}
                          sharePrices={currentPosition.sharePrices}
                          playerPosition={currentPosition.playerPositions[currentPosition.myTurnOrder]}
                          on:buysell={lastBuySell}/>
-            <div class="text-right">
+            <div class="text-center p-2">
                 <button bind:this={resetLastBuySellStepBtn} on:click={resetBuySell} disabled class="btn btn-secondary form-control-sm">Reset</button>
             </div>
         {/if}
