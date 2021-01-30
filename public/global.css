@@ -12,6 +12,10 @@ body {
 	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
 }
 
+.w-1 {
+	width: 1%;
+}
+
 .w-10 {
 	width: 10% !important;
 }
@@ -33,11 +37,19 @@ body {
 }
 
 .bgcolor-turn-1 {
-	background-color: aliceblue;
+	background-color: #f1f8ff;
 }
 
 .bgcolor-turn-2 {
-	background-color: mistyrose;
+	background-color: #ffefee;
+}
+
+.bgcolor-majorcard-turn-1 {
+	background-color: #d0ebff;
+}
+
+.bgcolor-majorcard-turn-2 {
+	background-color: #ffd0c9;
 }
 
 .game-card-cell-color {

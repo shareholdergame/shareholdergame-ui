@@ -175,7 +175,9 @@
 
         turn.cardStep = buildCardStep()
         turn.lastBuySellStep = buildBuySellStep()
-        lastBuySellForm.reset()
+        if (!isLastTurn()) {
+            lastBuySellForm.reset()
+        }
         recalculateTotal(currentPosition)
 
         currentStep = StepType.FIRST_BUY_SELL_STEP
@@ -298,7 +300,6 @@
                 </table>
             </div>
             <ApplyCardForm playerCards={currentPosition.playerPositions[currentPosition.myTurnOrder].playerCards}
-                           cash={currentPosition.playerPositions[currentPosition.myTurnOrder].cash}
                            on:cardapplied={onApplyCard}/>
         {:else}
             <PriceChangeStepItem step="{priceStep}"/>

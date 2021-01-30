@@ -12,7 +12,7 @@
 
 <table class="w-100">
     <tr>
-        <th class="w-50 text-center">Price</th>
+        <th class="text-center" colspan="2">Price</th>
         {#if currentPosition.hasOwnProperty('playerPositions')}
             {#each Object.entries(currentPosition.playerPositions) as [turnOrder, playerPosition]}
                 <th class="text-center" colspan="2">
@@ -24,7 +24,10 @@
     {#if currentPosition.hasOwnProperty('sharePrices')}
         {#each SHARES as shareId}
             <tr>
-                <td>
+                <td class="w-1 text-right pr-1">
+                    {currentPosition.sharePrices[shareId].price}
+                </td>
+                <td class="w-50">
                     <PriceScale shareId={shareId} currentPosition="{currentPosition}"/>
                 </td>
                 {#if currentPosition.hasOwnProperty('playerPositions')}
@@ -41,7 +44,7 @@
         {/each}
     {/if}
     <tr>
-        <td class="text-right pr-4">
+        <td class="text-right pr-4" colspan="2">
             Cash
         </td>
         {#if currentPosition.hasOwnProperty('playerPositions')}
@@ -53,7 +56,7 @@
         {/if}
     </tr>
     <tr>
-        <td class="text-right pr-4">
+        <td class="text-right pr-4" colspan="2">
             Total
         </td>
         {#if currentPosition.hasOwnProperty('playerPositions')}
