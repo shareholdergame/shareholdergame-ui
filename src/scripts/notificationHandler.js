@@ -1,4 +1,4 @@
-import {currentPath} from "../stores.js";
+import {currentPath, reloadPage} from "../stores.js";
 
 let _currentPath
 
@@ -25,6 +25,7 @@ export function handleNotifications(notifications) {
         }
     }
     if (pageNeedRefresh && notifReqRefresh) {
-        location.reload()
+        //location.reload()
+        reloadPage.set(true)
     }
 }

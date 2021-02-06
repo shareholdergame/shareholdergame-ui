@@ -1,7 +1,7 @@
 <script>
     import { onMount } from 'svelte';
     import {navigateTo} from 'svelte-router-spa'
-    import {currentPath} from "../../stores";
+    import {currentPath, reloadPage} from "../../stores";
     import {getMyGames, performInvitationStatusChange} from '../../scripts/game';
     import {getWhoPlaysNow} from "../../scripts/player";
     import {GameStatus, InvitationAction} from '../../scripts/constants'
@@ -14,6 +14,13 @@
     let games = []
     let invitations = []
     let whoPlaysNow = []
+
+    $: {
+        if ($reloadPage) {
+            refreshGamesList()
+            reloadPage.set(false)
+        }
+    }
 
     function refreshGamesList() {
         getMyGames('all', GameStatus.RUNNING, {offset: 0, ipp: 20}, function (gamesList) {

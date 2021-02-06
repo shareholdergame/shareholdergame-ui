@@ -1,7 +1,7 @@
 <script>
     import { onMount } from 'svelte'
     import Modal from "sv-bootstrap-modal"
-    import {currentPath} from "../../stores";
+    import {currentPath, reloadPage} from "../../stores";
     import { getGameReport, makeTurn } from '../../scripts/game'
     import {getCurrentPosition} from '../../scripts/playGamePageMediator'
     import GameHeader from '../../components/GameHeader.svelte'
@@ -28,6 +28,15 @@
     let positionPanel
     let turnForm
     let resultForForum = ''
+
+    $: {
+        if ($reloadPage) {
+            console.log('Reload page PlayGamePage')
+            let gameId = parseInt(currentRoute.namedParams.gameid)
+            refreshGameReport(gameId);
+            reloadPage.set(false)
+        }
+    }
 
     function refreshGameReport(gameId) {
         getGameReport(gameId, function (_gameSet) {

@@ -1,6 +1,7 @@
 <script>
     import { onMount } from 'svelte';
     import {navigateTo} from 'svelte-router-spa'
+    import {currentPath, reloadPage} from "../../stores";
     import GameItem from '../../components/GameItem.svelte'
     import {getMyGames} from "../../scripts/game";
     import {GameStatus} from "../../scripts/constants";
@@ -13,6 +14,13 @@
     let offset = 0
     let itemsPerPage = 21
     let games = []
+
+    $: {
+        if ($reloadPage) {
+            refreshGamesList()
+            reloadPage.set(false)
+        }
+    }
 
     function refreshGamesList() {
         getMyGames('all', GameStatus.FINISHED, {offset: offset, ipp: itemsPerPage}, function (gamesList) {
@@ -35,6 +43,7 @@
     }
 
     onMount(() => {
+        currentPath.set(currentRoute.path)
         refreshGamesList()
     })
 </script>
