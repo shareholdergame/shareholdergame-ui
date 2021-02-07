@@ -263,10 +263,10 @@
 </script>
 
 <div class="row">
-    <div class="col-md-1 text-center">
-        {currentPosition.currentRound}.{currentPosition.currentTurn}
+    <div class="col-md-1 text-center color-turn-{currentPosition.currentTurn} bgcolor-turn-{currentPosition.currentTurn}">
+        <strong>{currentPosition.currentRound}.{currentPosition.currentTurn}</strong>
     </div>
-    <div class="col-md-3 align-top">
+    <div class="col-md-3 align-top color-turn-{currentPosition.currentTurn} bgcolor-turn-{currentPosition.currentTurn}">
         {#if !isLastTurn()}
             {#if currentStep === StepType.FIRST_BUY_SELL_STEP && currentPosition.hasOwnProperty('sharePrices')}
                 <BuySellForm bind:this={firstBuySellForm}
@@ -282,12 +282,12 @@
             </div>
         {/if}
     </div>
-    <div class="col-md-1">
+    <div class="col-md-1 bgcolor-turn-{currentPosition.currentTurn}">
         {#if currentStep === StepType.LAST_BUY_SELL_STEP}
             <CardItem cardId={cardId}/>
         {/if}
     </div>
-    <div class="col-md-3">
+    <div class="col-md-3 color-turn-{currentPosition.currentTurn} bgcolor-turn-{currentPosition.currentTurn}">
         {#if currentStep === StepType.FIRST_BUY_SELL_STEP && currentPosition.hasOwnProperty('playerPositions')}
             <div id="mobile-only">
                 <table class="w-100 mb-1">
@@ -308,7 +308,7 @@
             </div>
         {/if}
     </div>
-    <div class="col-md-3 align-top">
+    <div class="col-md-3 color-turn-{currentPosition.currentTurn} bgcolor-turn-{currentPosition.currentTurn} align-top">
         {#if currentStep === StepType.LAST_BUY_SELL_STEP && !isLastTurn() && currentPosition.hasOwnProperty('playerPositions')}
             <div id="mobile-only-2">
                 <table class="w-100 mb-1">
@@ -330,13 +330,13 @@
             </div>
         {/if}
     </div>
-    <div class="col-md-1 text-center">
+    <div class="col-md-1 color-turn-{currentPosition.currentTurn} bgcolor-turn-{currentPosition.currentTurn} text-center">
         {#if currentPosition.hasOwnProperty('playerPositions')}
             {currentPosition.playerPositions[currentPosition.myTurnOrder].total}
         {/if}
     </div>
 </div>
-<div class="row mb-3">
+<div class="row mb-3 bgcolor-turn-{currentPosition.currentTurn}">
     <div class="col-md-10 text-right">
         <button bind:this={doTurnBtn} on:click={doTurn} class="btn btn-primary" disabled>Do Turn</button>
     </div>

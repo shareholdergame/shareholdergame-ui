@@ -47,6 +47,6 @@
         {#each SHARES as shareId}
             <td class="w-20"><SingleBuySellForm bind:this={controls[shareId]} step={step} share="{playerPosition.shares[shareId]}" on:buysell={buySellShare}/></td>
         {/each}
-        <td class="w-20">{playerPosition.cash}</td>
+        <td class="w-20"><em>{playerPosition.cash}</em></td>
     </tr>
 </table>
