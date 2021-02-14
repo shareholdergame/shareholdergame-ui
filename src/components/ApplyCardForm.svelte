@@ -15,7 +15,7 @@
         let playerCardId = parseInt(event.detail.playerCard.id)
         selectedPlayerCardId = playerCardId
         for (const playerCard of playerCards) {
-            if (playerCard.id !== playerCardId) {
+            if (playerCard.id !== playerCardId && !playerCard.applied) {
                 if (cardRows.hasOwnProperty(playerCard.id)) {
                     cardRows[playerCard.id].deSelect()
                 }

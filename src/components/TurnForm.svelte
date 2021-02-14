@@ -253,7 +253,7 @@
         if (isNothingBoughtSolt() && !isLastTurn()) {
             readyToSendTurn = confirm('You havent buy/sell anything on the third step. Do you want to continue?')
         } else {
-            readyToSendTurn = confirm('You want to finish your turn. Are you sure?')
+            readyToSendTurn = confirm('Please confirm your turn?')
         }
 
         if (readyToSendTurn) {

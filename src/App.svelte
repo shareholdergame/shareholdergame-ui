@@ -23,8 +23,6 @@
                     handleNotifications(value)
                 }
             })
-        } else {
-            clearInterval(interval)
         }
     }
 
