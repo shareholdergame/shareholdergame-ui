@@ -21,7 +21,6 @@
                 }
             }
         }
-        applyCardBtn.disabled = false
     }
 
     function applyCard(event) {
@@ -40,8 +39,6 @@
                 return
             }
         }
-
-        applyCardBtn.disabled = true
 
         dispatch('cardapplied', {
             playerCardId: selectedPlayerCardId,
