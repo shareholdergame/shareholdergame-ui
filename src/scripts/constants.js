@@ -8,7 +8,7 @@ export const GAME_OPTIONS = {
             minor: 6
         },
         title: '4 x 6',
-        description: 'Good for regular playing and tournaments'
+        description: 'Good for regular play and tournaments'
     },
     game_3x5: {
         cardOption: {

@@ -24,6 +24,9 @@
     }
 
     function applyCard(event) {
+        if (selectedPlayerCardId === undefined) {
+            return;
+        }
         let cellStatuses = cardRows[selectedPlayerCardId].getCellStatuses()
         let playerCard = cardRows[selectedPlayerCardId].getPlayerCard()
         let operations = {}

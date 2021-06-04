@@ -25,7 +25,6 @@ export function handleNotifications(notifications) {
         }
     }
     if (pageNeedRefresh && notifReqRefresh) {
-        //location.reload()
         reloadPage.set(true)
     }
 }
