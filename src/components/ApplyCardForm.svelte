@@ -12,10 +12,12 @@
     let selectedPlayerCardId
 
     function cardSelected(event) {
+        console.log(JSON.stringify(cardRows))
         let playerCardId = parseInt(event.detail.playerCard.id)
         selectedPlayerCardId = playerCardId
         for (const playerCard of playerCards) {
             if (playerCard.id !== playerCardId && !playerCard.applied) {
+                console.log(playerCard.id)
                 if (cardRows.hasOwnProperty(playerCard.id)) {
                     cardRows[playerCard.id].deSelect()
                 }
@@ -26,6 +28,8 @@
     function applyCard(event) {
         if (selectedPlayerCardId === undefined) {
             return;
+        } else {
+            console.log(JSON.stringify(cardRows[selectedPlayerCardId]))
         }
         let cellStatuses = cardRows[selectedPlayerCardId].getCellStatuses()
         let playerCard = cardRows[selectedPlayerCardId].getPlayerCard()

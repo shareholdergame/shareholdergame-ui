@@ -6,7 +6,7 @@
 </script>
 
 <svelte:head>
-    <title>Game Stockholder</title>
+    <title>Игра Акционер</title>
 </svelte:head>
 
 <div class="intro-header">
@@ -20,9 +20,9 @@
                         Игра «Акционер» требует хладнокровия в ситуации, когда вас загнали в угол и щекочет нервы в ожидании хода соперника. Она дарит радость побед и учит стойко
                         переносить горечь поражений.</p>
                     <hr class="intro-divider">
-                    <a href="/secure/home" class="btn btn-primary btn-lg active" style="width: 200px" role="button" aria-pressed="true">Play</a>
+                    <a href="/secure/home" class="btn btn-primary btn-lg active" style="width: 200px" role="button" aria-pressed="true">Играть</a>
                     {#if !$authenticated}
-                        <a href="/signup" class="btn btn-secondary btn-lg active" style="width: 200px" role="button" aria-pressed="true">Sign Up</a>
+                        <a href="/signup" class="btn btn-secondary btn-lg active" style="width: 200px" role="button" aria-pressed="true">Регистрация</a>
                     {/if}
                 </div>
             </div>
