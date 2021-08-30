@@ -68,25 +68,25 @@
 <div class="container-fluid mh-100">
     <div class="row justify-content-md-center pt-4 pb-4">
         <div class="col-sm-4">
-            <button type="button" class="btn btn-primary btn-lg btn-block" on:click={onStartNewGame}>Start New Game</button>
+            <button type="button" class="btn btn-primary btn-lg btn-block" on:click={onStartNewGame}>Начать Новую Игру</button>
         </div>
     </div>
     <div class="row">
         <div class="col-sm-4">
-            <h4>Invitations</h4>
+            <h4>Приглашения</h4>
             {#each invitations as invitation}
                 <InvitationItem game="{invitation}" on:accept={acceptInvitation} on:reject={rejectInvitation}
                                 on:cancel={cancelInvitation}/>
             {/each}
         </div>
         <div class="col-sm-4">
-            <h4>Active games</h4>
+            <h4>Неоконченные Игры</h4>
             {#each games as game}
                 <GameItem gameSet="{game}" on:play={showPlayGamePage}/>
             {/each}
         </div>
         <div class="col-sm-4 overflow-auto">
-            <h4>Now playing</h4>
+            <h4>Сейчас Играют:</h4>
             <table class="table">
                 <tr>
                     <th>Игра</th>
