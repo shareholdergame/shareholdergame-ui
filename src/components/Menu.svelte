@@ -1,9 +1,16 @@
 <script>
+    import { createEventDispatcher } from 'svelte';
     import { authenticated, user } from '../stores.js'
     import {logout} from "../auth";
 
+    const dispatch = createEventDispatcher();
+
     function onSignOut(event) {
         logout()
+    }
+
+    function onClickChatBtn(event) {
+        dispatch('showchatwindow')
     }
 </script>
 
@@ -36,6 +43,7 @@
 
     <ul class="nav navbar-nav">
         {#if $authenticated}
+            <li><button class="btn btn-outline-secondary" on:click={onClickChatBtn}>Chat</button></li>
             <li><a class="nav-link" href="/secure/profile">{$user}</a></li>
             <!--<li>&#128276;</li>-->
             <li><button class="btn btn-outline-secondary" on:click={onSignOut}>Выйти</button></li>
