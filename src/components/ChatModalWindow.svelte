@@ -7,6 +7,7 @@
     const dispatch = createEventDispatcher();
     const CHAT_LIST_MODE = 0
     const SINGLE_CHAT_MODE = 1
+    const NEW_CHAT_MODE = 2
 
     export let isOpen = false
 
@@ -36,7 +37,6 @@
             if (chat.chatId === event.detail) {
                 selectedChat = chat
                 getMessages(chat.chatId, function (data) {
-                    console.log(JSON.stringify(data))
                     windowMode = SINGLE_CHAT_MODE
                     messages = data.messages
                 })
@@ -52,13 +52,19 @@
                 text: messageText
             }, function () {
                 messageText = ''
-                // todo
+                getMessages(selectedChat.chatId, function (data) {
+                    messages = data.messages
+                })
             })
         }
     }
 
     function onBackToChatList(event) {
         windowMode = CHAT_LIST_MODE
+    }
+
+    function onNewChatMode(event) {
+        windowMode = NEW_CHAT_MODE
     }
 </script>
 
@@ -68,10 +74,12 @@
             {#if windowMode === CHAT_LIST_MODE}
                 Chats
             {:else if windowMode === SINGLE_CHAT_MODE}
-                Chat with&nbsp;
+                Chat with
                 {#each selectedChat.recipients as recipient}
-                    <b>{recipient}</b>
+                    <b>&nbsp;{recipient}</b>
                 {/each}
+            {:else}
+                New Chat
             {/if}
         </h5>
         <button type="button" class="close" on:click={onClose}>
@@ -81,10 +89,13 @@
     <div class="modal-body">
         <div class="d-flex flex-row">
             {#if windowMode === CHAT_LIST_MODE}
-                <div class="flex-column w-100 overflow-auto" style="height: 70vh">
-                    {#each chats as chat}
-                        <ChatItem chat={chat} bind:this={chatItems[chat.chatId]} on:selectchat={onSelectChat}/>
-                    {/each}
+                <div class="flex-column w-100">
+                    <div class="overflow-auto" style="height: 70vh">
+                        {#each chats as chat}
+                            <ChatItem chat={chat} bind:this={chatItems[chat.chatId]} on:selectchat={onSelectChat}/>
+                        {/each}
+                    </div>
+                    <button type="button" class="btn btn-primary btn-lg btn-block" on:click={onNewChatMode}>New Chat</button>
                 </div>
             {:else if windowMode === SINGLE_CHAT_MODE}
                 <div class="flex-column w-100">
@@ -100,6 +111,10 @@
                         <label for="new-chat-msg"></label>
                         <textarea id="new-chat-msg" class="md-textarea form-control" rows="3" on:keypress={onChatTextEnter} bind:value={messageText}></textarea>
                     </div>
+                    <button type="button" class="btn btn-primary btn-lg btn-block" on:click={onBackToChatList}>Back to Chat List</button>
+                </div>
+            {:else}
+                <div class="flex-column w-100">
                     <button type="button" class="btn btn-primary btn-lg btn-block" on:click={onBackToChatList}>Back to Chat List</button>
                 </div>
             {/if}
