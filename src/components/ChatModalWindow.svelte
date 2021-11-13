@@ -43,15 +43,13 @@
     }
 
     function handleMessages(data) {
-        unreadMessageIds = []
         let chatTextDiv = document.getElementById('chat-text')
         for (const message of data.messages) {
             if (!message.isRead) {
                 unreadMessageIds.push(message.messageId)
             }
             let innerHtml = '<small><b>' + message.senderName + ', ' + message.dateTime
-                + '</b>'
-                /*+ (message.isRead ? '<i class="bi bi-check text-success"></i>' : '')*/
+                + '</b>' + (message.isRead ? '<i class="bi bi-check text-success"></i>' : '')
                 + '</br>' + message.text
                 + '</small>'
 
@@ -75,9 +73,6 @@
                 getMessages(chat.chatId, msgCount, function (data) {
                     handleMessages(data);
                     scrollMessagesDivToEnd();
-                    if (unreadMessageIds.length > 0) {
-                        markAsRead(unreadMessageIds, function () {})
-                    }
                 })
                 break;
             }
