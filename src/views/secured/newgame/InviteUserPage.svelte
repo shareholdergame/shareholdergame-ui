@@ -32,11 +32,11 @@
     function onSelectPage(event) {
         offset = parseInt(event.detail.offset)
         itemsPerPage = parseInt(event.detail.ipp)
-        searchPlayer(userNamePrefix, {offset: offset, ipp: itemsPerPage}, searchUserCallback)
+        searchPlayer({name: userNamePrefix, offset: offset, ipp: itemsPerPage}, searchUserCallback)
     }
 
     function onSearchPlayerClick() {
-        searchPlayer(userNamePrefix, {offset: offset, ipp: itemsPerPage}, searchUserCallback)
+        searchPlayer({name: userNamePrefix, offset: offset, ipp: itemsPerPage}, searchUserCallback)
     }
 
     function onPlayWithComputer(event) {
@@ -45,7 +45,7 @@
         })
     }
 
-    onMount(() => { searchPlayer('', {offset: offset, ipp: itemsPerPage}, searchUserCallback)})
+    onMount(() => { searchPlayer({name: '', offset: offset, ipp: itemsPerPage}, searchUserCallback)})
 </script>
 
 <svelte:head>

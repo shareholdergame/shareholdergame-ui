@@ -13,9 +13,9 @@
 </script>
 
 <div class="card mb-1" on:click={onClick}>
-    <div class="card-body p-2">
+    <div class="card-body p-2 text-truncate">
         {#each chat.recipients as recipient}
-            <b>{recipient}</b>
+            <b>&nbsp;{recipient}</b>
         {/each}
         {#if chat.unreadCount !== undefined && chat.unreadCount > 0}
             <span class="badge badge-primary">{chat.unreadCount}</span>
