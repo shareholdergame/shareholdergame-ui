@@ -1,7 +1,7 @@
 <script>
     import { onMount } from 'svelte'
     import Modal from "sv-bootstrap-modal"
-    import {currentPath, reloadPage} from "../../stores";
+    import {currentPath, reloadPage, gameIds} from "../../stores";
     import { getGameReport, makeTurn } from '../../scripts/game'
     import {getCurrentPosition} from '../../scripts/playGamePageMediator'
     import GameHeader from '../../components/GameHeader.svelte'
@@ -33,7 +33,11 @@
         if ($reloadPage) {
             console.log('Reload page PlayGamePage')
             let gameId = parseInt(currentRoute.namedParams.gameid)
-            refreshGameReport(gameId);
+            for (const id of $gameIds) {
+                if (id === gameId) {
+                    refreshGameReport(gameId);
+                }
+            }
             reloadPage.set(false)
         }
     }

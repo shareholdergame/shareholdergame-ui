@@ -8,3 +8,4 @@ export const user = writable(storedUser);
 export const currentPath = writable('/')
 export const errorMessage = writable('')
 export const reloadPage = writable(false)
+export const gameIds = writable([])
