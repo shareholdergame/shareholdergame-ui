@@ -2,6 +2,7 @@
     import { createEventDispatcher } from 'svelte';
     import Modal from "sv-bootstrap-modal"
     import {getChats, getMessages, sendChatMessage, markAsRead} from '../scripts/chatService'
+    import {newChatMessages} from '../stores.js'
     import { searchPlayer } from '../scripts/player';
     import ChatItem from './ChatItem.svelte'
 
@@ -24,7 +25,6 @@
     let offset = 0
     let itemsPerPage = DEFAULT_MSG_COUNT
     let selectedUsers = []
-    let unreadMessageIds = []
 
     function onClose(event) {
         isOpen = false
@@ -42,16 +42,32 @@
         }
     }
 
-    function handleMessages(data) {
+    $: {
+        if (isOpen && $newChatMessages.length > 0 && windowMode === SINGLE_CHAT_MODE) {
+            for (const chatMessage of $newChatMessages) {
+                if (chatMessage.chatId === selectedChat.chatId) {
+                    let unreadMessageIds = []
+                    getMessages(selectedChat.chatId, DEFAULT_MSG_COUNT, function (data) {
+                        handleMessages(data);
+                        scrollMessagesDivToEnd();
+                        if (unreadMessageIds.length > 0) {
+                            markAsRead(unreadMessageIds, function (data) {})
+                        }
+                    })
+                    break;
+                }
+            }
+        }
+    }
+
+    function handleMessages(data, unreadMessageIds) {
         let chatTextDiv = document.getElementById('chat-text')
         for (const message of data.messages) {
             if (!message.isRead) {
                 unreadMessageIds.push(message.messageId)
             }
             let innerHtml = '<small><b>' + message.senderName + ', ' + message.dateTime
-                + '</b>' + (message.isRead ? '<i class="bi bi-check text-success"></i>' : '')
-                + '</br>' + message.text
-                + '</small>'
+                + '</b>' + '</br>' + message.text + '</small>'
 
             let pText = document.createElement('p')
             pText.innerHTML = innerHtml
@@ -70,9 +86,13 @@
         for (const chat of chats) {
             if (chat.chatId === event.detail) {
                 selectedChat = chat
-                getMessages(chat.chatId, msgCount, function (data) {
-                    handleMessages(data);
+                let unreadMessageIds = []
+                getMessages(selectedChat.chatId, msgCount, function (data) {
+                    handleMessages(data, unreadMessageIds);
                     scrollMessagesDivToEnd();
+                    if (unreadMessageIds.length > 0) {
+                        markAsRead(unreadMessageIds, function (data) {})
+                    }
                 })
                 break;
             }
@@ -86,7 +106,7 @@
                 text: messageText
             }, function (chatId) {
                 messageText = ''
-                getMessages(chatId, msgCount, function (data) {
+                getMessages(chatId, DEFAULT_MSG_COUNT, function (data) {
                     handleMessages(data);
                     scrollMessagesDivToEnd();
                 })

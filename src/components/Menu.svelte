@@ -1,6 +1,6 @@
 <script>
     import { createEventDispatcher } from 'svelte';
-    import { authenticated, user, newChatMessagesCount } from '../stores.js'
+    import { authenticated, user, newChatMessages } from '../stores.js'
     import {logout} from "../auth";
 
     const dispatch = createEventDispatcher();
@@ -45,8 +45,8 @@
         {#if $authenticated}
             <li>
                 <button class="btn btn-outline-secondary" on:click={onClickChatBtn}>Chat</button>
-                {#if $newChatMessagesCount > 0}
-                    <span class="badge badge-danger">{$newChatMessagesCount}</span>
+                {#if $newChatMessages.length > 0}
+                    <span class="badge badge-danger">{$newChatMessages.length}</span>
                 {/if}
             </li>
             <li><a class="nav-link" href="/secure/profile">{$user}</a></li>

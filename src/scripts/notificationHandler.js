@@ -1,4 +1,4 @@
-import {currentPath, reloadPage, newChatMessagesCount, gameIds} from "../stores.js";
+import {currentPath, reloadPage, newChatMessages, gameIds} from "../stores.js";
 
 let _currentPath
 
@@ -15,7 +15,7 @@ const refreshablePages = [
 export function handleNotifications(notifications) {
     let pageNeedRefresh = false
     let notifReqRefresh = false
-    let messageNotifCount = 0
+    let messageNotifications = []
     let notifGameIds = []
     for (const notification of notifications) {
         if (notification.type === 'GAME_STARTED' || notification.type === 'MOVE_DONE'
@@ -23,7 +23,7 @@ export function handleNotifications(notifications) {
             notifReqRefresh = true
             notifGameIds.push(notification.body.gameId)
         } else if (notification.type === 'MESSAGE_RECEIVED') {
-            messageNotifCount++
+            messageNotifications.push(notification.body)
         }
     }
     for (const page of refreshablePages) {
@@ -35,7 +35,7 @@ export function handleNotifications(notifications) {
         reloadPage.set(true)
         gameIds.set(notifGameIds)
     }
-    if (messageNotifCount > 0) {
-        newChatMessagesCount.set(messageNotifCount)
+    if (messageNotifications.length > 0) {
+        newChatMessages.set(messageNotifications)
     }
 }
