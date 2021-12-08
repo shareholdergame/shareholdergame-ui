@@ -10,7 +10,7 @@
     const CHAT_LIST_MODE = 0
     const SINGLE_CHAT_MODE = 1
     const NEW_CHAT_MODE = 2
-    const DEFAULT_MSG_COUNT = 50
+    const DEFAULT_MSG_COUNT = 10
 
     export let isOpen = false
 
@@ -21,7 +21,7 @@
     let windowMode = CHAT_LIST_MODE
     let players = []
     let userNamePrefix = ''
-    let msgCount = 50
+    let msgCount = DEFAULT_MSG_COUNT
     let offset = 0
     let itemsPerPage = DEFAULT_MSG_COUNT
     let selectedUsers = []
@@ -48,7 +48,7 @@
                 if (chatMessage.chatId === selectedChat.chatId) {
                     let unreadMessageIds = []
                     getMessages(selectedChat.chatId, DEFAULT_MSG_COUNT, function (data) {
-                        handleMessages(data);
+                        handleMessages(data, unreadMessageIds);
                         scrollMessagesDivToEnd();
                         if (unreadMessageIds.length > 0) {
                             markAsRead(unreadMessageIds, function (data) {})
@@ -62,8 +62,9 @@
 
     function handleMessages(data, unreadMessageIds) {
         let chatTextDiv = document.getElementById('chat-text')
+        chatTextDiv.innerHTML = '';
         for (const message of data.messages) {
-            if (!message.isRead) {
+            if (!message.isRead && unreadMessageIds !== undefined) {
                 unreadMessageIds.push(message.messageId)
             }
             let innerHtml = '<small><b>' + message.senderName + ', ' + message.dateTime
@@ -192,7 +193,6 @@
         if (chatTextDiv.scrollTop === 0) {
             msgCount = msgCount + 50
             getMessages(selectedChat.chatId, msgCount, function (data) {
-                chatTextDiv.innerHTML = '';
                 handleMessages(data);
                 chatTextDiv.scrollTo(0, DEFAULT_MSG_COUNT * chatTextDiv.scrollHeight / msgCount)
             })
