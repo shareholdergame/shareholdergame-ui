@@ -2,7 +2,7 @@ import {getBearer} from '../auth.js';
 import { API_BASE_URL } from './constants'
 import { handleResponse } from './responseHandler'
 
-export async function searchPlayer(playerNamePrefix, parameters, successCallback) {
+export async function searchPlayer(parameters, successCallback) {
     let url = API_BASE_URL + '/player'
     if (parameters !== undefined) {
         url = url + '?' + new URLSearchParams(parameters)

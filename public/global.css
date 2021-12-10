@@ -28,6 +28,10 @@ body {
 	width: 20% !important;
 }
 
+.w-40 {
+	width: 45% !important;
+}
+
 .color-turn-1 {
 	color: darkslateblue;
 }

@@ -51,7 +51,7 @@
 
     export function deSelect() {
         for (const shareId of SHARES) {
-            cellStatuses[shareId].selected = false
+            cellStatuses[shareId].selected = !!cellStatuses[shareId].fixedColor
             cellStatuses[shareId].selectedOperand = ''
         }
     }

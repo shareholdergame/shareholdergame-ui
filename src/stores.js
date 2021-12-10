@@ -8,3 +8,5 @@ export const user = writable(storedUser);
 export const currentPath = writable('/')
 export const errorMessage = writable('')
 export const reloadPage = writable(false)
+export const newChatMessages = writable([])
+export const gameIds = writable([])

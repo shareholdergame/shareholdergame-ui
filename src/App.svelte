@@ -6,9 +6,11 @@
     import { authenticated } from  './stores.js'
     import {handleNotifications} from "./scripts/notificationHandler";
     import Menu from './components/Menu.svelte'
+    import ChatModalWindow from './components/ChatModalWindow.svelte';
 
     let is_authenticated = false;
     let refreshStarted = false
+    let showModalWindow = false
 
     authenticated.subscribe(value => {
         is_authenticated = value;
@@ -40,9 +42,18 @@
         }
     }
 
+    function onShowChatWindow() {
+        showModalWindow = true
+    }
+
+    function onHideChatWindow() {
+        showModalWindow = false
+    }
+
     window.addEventListener('focus', startRefresh);
     window.addEventListener('blur', stopRefresh);
 </script>
 
-<Menu />
+<Menu on:showchatwindow={onShowChatWindow}/>
 <Router {routes}/>
+<ChatModalWindow isOpen={showModalWindow} on:hide={onHideChatWindow}/>
