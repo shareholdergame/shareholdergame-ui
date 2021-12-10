@@ -100,19 +100,17 @@
         }
     }
 
-    function onChatTextEnter(event) {
-        if (event.key === 'Enter' && selectedChat !== undefined && messageText.trim().length > 0) {
-            sendChatMessage({
-                recipients: selectedChat.recipients,
-                text: messageText
-            }, function (chatId) {
-                messageText = ''
-                getMessages(chatId, DEFAULT_MSG_COUNT, function (data) {
-                    handleMessages(data);
-                    scrollMessagesDivToEnd();
-                })
+    function onSendMessage(event) {
+        sendChatMessage({
+            recipients: selectedChat.recipients,
+            text: messageText
+        }, function (chatId) {
+            messageText = ''
+            getMessages(chatId, DEFAULT_MSG_COUNT, function (data) {
+                handleMessages(data);
+                scrollMessagesDivToEnd();
             })
-        }
+        })
     }
 
     function onBackToChatList(event) {
@@ -234,9 +232,10 @@
                     <button type="button" class="btn btn-light btn-block" on:click={onBackToChatList}>&lt;- Back to Chat List</button>
                     <div class="overflow-auto" style="height: 50vh" id="chat-text" on:scroll={onScrollMessages}>
                     </div>
-                    <div class="md-form mb-2">
+                    <div class="md-form mb-2 d-flex flex-row">
                         <label for="new-chat-msg"></label>
-                        <textarea id="new-chat-msg" class="md-textarea form-control" rows="3" on:keypress={onChatTextEnter} bind:value={messageText}></textarea>
+                        <textarea id="new-chat-msg" class="md-textarea form-control mr-2" rows="3" bind:value={messageText}></textarea>
+                        <button type="button" class="btn btn-outline-primary" on:click={onSendMessage}><i class="bi bi-send"></i></button>
                     </div>
                 </div>
             {:else}
