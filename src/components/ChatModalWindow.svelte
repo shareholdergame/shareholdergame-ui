@@ -10,7 +10,7 @@
     const CHAT_LIST_MODE = 0
     const SINGLE_CHAT_MODE = 1
     const NEW_CHAT_MODE = 2
-    const DEFAULT_MSG_COUNT = 10
+    const DEFAULT_MSG_COUNT = 50
 
     export let isOpen = false
 
