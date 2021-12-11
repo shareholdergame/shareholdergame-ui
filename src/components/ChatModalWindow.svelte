@@ -51,6 +51,7 @@
                         handleMessages(data, unreadMessageIds);
                         scrollMessagesDivToEnd();
                         if (unreadMessageIds.length > 0) {
+                            removeNotifications(unreadMessageIds);
                             markAsRead(unreadMessageIds, function (data) {})
                         }
                     })
@@ -58,6 +59,19 @@
                 }
             }
         }
+    }
+
+    function removeNotifications(unreadMessageIds) {
+        let chatMsgs = $newChatMessages
+        let newChatMsgs = []
+        for (const chatMsg of chatMsgs) {
+            for (const msgId of unreadMessageIds) {
+                if (msgId !== chatMsg.chatMessageId) {
+                   newChatMsgs.push(chatMsg)
+                }
+            }
+        }
+        newChatMessages.set(newChatMsgs)
     }
 
     function handleMessages(data, unreadMessageIds) {
@@ -198,7 +212,7 @@
     }
 </script>
 
-<Modal bind:open={isOpen} class="col-sm-4">
+<Modal bind:open={isOpen} class="col-sm-4" ignoreBackdrop="false">
     <div class="modal-header">
         <h5 class="modal-title text-truncate">
             {#if windowMode === CHAT_LIST_MODE}
