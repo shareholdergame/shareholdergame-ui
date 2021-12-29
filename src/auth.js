@@ -1,5 +1,5 @@
 import { authenticated, user, errorMessage } from './stores.js'
-import { API_BASE_URL } from './scripts/constants'
+import { API_BASE_URL } from './scripts/apiUrl'
 import {navigateTo} from "svelte-router-spa";
 import {handleResponse} from "./scripts/responseHandler";
 

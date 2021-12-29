@@ -1,4 +1,4 @@
-import { API_BASE_URL } from './constants'
+import { API_BASE_URL } from './apiUrl'
 import { handleResponse } from './responseHandler'
 import {getBearer} from '../auth.js';
 

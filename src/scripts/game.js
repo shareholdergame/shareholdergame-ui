@@ -1,4 +1,5 @@
-import { GAME_OPTIONS, API_BASE_URL, GameStatus } from './constants'
+import { API_BASE_URL } from './apiUrl'
+import { GAME_OPTIONS, GameStatus } from './constants'
 import { handleResponse } from './responseHandler'
 import {getBearer} from '../auth.js';
 

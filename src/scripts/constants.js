@@ -1,6 +1,3 @@
-//export const API_BASE_URL = 'https://stockholdergame.com/stockholdergame'
-export const API_BASE_URL = 'http://localhost/stockholdergame'
-
 export const GAME_OPTIONS = {
     game_4x6: {
         cardOption: {
