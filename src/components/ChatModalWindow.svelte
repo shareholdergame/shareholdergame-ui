@@ -106,6 +106,7 @@
                     handleMessages(data, unreadMessageIds);
                     scrollMessagesDivToEnd();
                     if (unreadMessageIds.length > 0) {
+                        removeNotifications(unreadMessageIds);
                         markAsRead(unreadMessageIds, function (data) {})
                     }
                 })

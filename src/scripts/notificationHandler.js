@@ -26,9 +26,11 @@ export function handleNotifications(notifications) {
             messageNotifications.push(notification.body)
         }
     }
-    for (const page of refreshablePages) {
-        if (_currentPath.includes(page)) {
-            pageNeedRefresh = true
+    if (notifReqRefresh) {
+        for (const page of refreshablePages) {
+            if (_currentPath.includes(page)) {
+                pageNeedRefresh = true
+            }
         }
     }
     if (pageNeedRefresh && notifReqRefresh) {
