@@ -6,6 +6,7 @@
     import {getMyGames} from "../../scripts/game";
     import {GameStatus} from "../../scripts/constants";
     import Paginator from "../../components/Paginator.svelte"
+    import {GAME_OPTIONS} from '../../scripts/constants'
 
     export let currentRoute
     export let params = {}
@@ -14,6 +15,10 @@
     let offset = 0
     let itemsPerPage = 21
     let games = []
+    let filter = {
+        userNamePrefix: '',
+        cardOption: 'all'
+    }
 
     $: {
         if ($reloadPage) {
@@ -56,6 +61,30 @@
     <div class="row mb-3 mt-3">
         <div class="col-sm">
             <h2>Games Archive</h2>
+        </div>
+    </div>
+    <div class="row mb-3 mt-3">
+        <div class="col-sm">
+        </div>
+        <div class="col-sm">
+            <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                <label class="btn btn-secondary active">
+                    <input type="radio" name="options" id="option1" autocomplete="off" checked>All
+                </label>
+                {#each Object.entries(GAME_OPTIONS) as [gameOptionName, gameOption]}
+                    <label class="btn btn-secondary">
+                        <input type="radio" name="options" id="option2" autocomplete="off">{gameOption.title}
+                    </label>
+                {/each}
+            </div>
+        </div>
+        <div class="col-sm">
+            <div class="input-group w-100 d-flex">
+                <label for="userNamePrefix">User name</label>
+                <input type="text" id="userNamePrefix" class="form-control ml-3 flex-grow-1" bind:value={filter.userNamePrefix}
+                       placeholder="Type at least 3 letters..."/>
+                <button type="button" class="btn btn-primary ml-3">Search</button>
+            </div>
         </div>
     </div>
     <div class="row row-cols-1 row-cols-sm-3">
