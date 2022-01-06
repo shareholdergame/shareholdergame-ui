@@ -42,6 +42,23 @@ export async function getMyGames(gameOption, gameStatus, parameters, successCall
     handleResponse(response, successCallback)
 }
 
+export async function getGameResults(gameOption, parameters, successCallback) {
+    let url = API_BASE_URL + '/game/results/' + gameOption
+    if (parameters !== undefined) {
+        url = url + '?' + new URLSearchParams(parameters)
+    }
+
+    let response = await fetch(url, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': getBearer()
+        }
+    })
+
+    handleResponse(response, successCallback)
+}
+
 export async function performInvitationStatusChange(gameId, action, successCallback) {
     let url = API_BASE_URL + '/game/' + gameId + '/invitation?action=' + action
 

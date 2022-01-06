@@ -123,7 +123,11 @@
         let copyText = document.getElementById("resultForForumArea");
         copyText.select();
         copyText.setSelectionRange(0, 99999);
-        document.execCommand("copy");
+        navigator.clipboard.writeText(copyText.value);
+    }
+
+    function onCopyReport() {
+        navigator.clipboard.writeText(JSON.stringify(currentPosition));
     }
 </script>
 
@@ -160,6 +164,15 @@
                   on:buysell={updatePosition} on:reset={updatePosition} on:doturn={onDoTurn}/>
     {/if}
     <CardSetPanel players="{game.players}" gameStatus="{game.status}"/>
+    <div class="row pt-3 pb-3">
+        <div class="col-sm-4">
+        </div>
+        <div class="col-sm-4">
+            <button type="button" class="btn btn-secondary btn-sm btn-block" on:click={onCopyReport}>Copy Game Report in JSON Format</button>
+        </div>
+        <div class="col-sm-4">
+        </div>
+    </div>
 </div>
 
 <Modal bind:open={isOpen}>

@@ -2,9 +2,8 @@
     import { onMount } from 'svelte';
     import {navigateTo} from 'svelte-router-spa'
     import {currentPath, reloadPage} from "../../stores";
-    import GameItem from '../../components/GameItem.svelte'
-    import {getMyGames} from "../../scripts/game";
-    import {GameStatus} from "../../scripts/constants";
+    import GameResultItem from '../../components/GameResultItem.svelte'
+    import {getGameResults} from "../../scripts/game";
     import Paginator from "../../components/Paginator.svelte"
 
     export let currentRoute
@@ -12,7 +11,7 @@
 
     let total = 0
     let offset = 0
-    let itemsPerPage = 21
+    let itemsPerPage = 15
     let games = []
 
     $: {
@@ -23,7 +22,7 @@
     }
 
     function refreshGamesList() {
-        getMyGames('all', GameStatus.FINISHED, {offset: offset, ipp: itemsPerPage}, function (gamesList) {
+        getGameResults('all', {offset: offset, ipp: itemsPerPage}, function (gamesList) {
             console.log(JSON.stringify(gamesList))
             total = gamesList.pagination.itemsCount
             offset = gamesList.pagination.offset
@@ -61,7 +60,7 @@
     <div class="row row-cols-1 row-cols-sm-3">
         {#each games as game}
             <div class="col-sm-4">
-                <GameItem gameSet="{game}" on:view={showPlayGamePage}/>
+                <GameResultItem gameSet="{game}" on:view={showPlayGamePage}/>
             </div>
         {/each}
     </div>
