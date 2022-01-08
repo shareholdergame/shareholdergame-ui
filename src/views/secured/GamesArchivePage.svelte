@@ -5,14 +5,19 @@
     import GameResultItem from '../../components/GameResultItem.svelte'
     import {getGameResults} from "../../scripts/game";
     import Paginator from "../../components/Paginator.svelte"
+    import UserNameFilter from "../../components/UserNameFilter.svelte"
+    import OptionFilter from "../../components/OptionFilter.svelte"
 
     export let currentRoute
     export let params = {}
 
     let total = 0
-    let offset = 0
-    let itemsPerPage = 15
     let games = []
+    let parameters = {
+        playerNamePrefix: '',
+        offset: 0,
+        ipp: 15
+    }
 
     $: {
         if ($reloadPage) {
@@ -21,11 +26,16 @@
         }
     }
 
+    const GAME_OPTION_FILTER = {
+        all: "All",
+        game_4x6: "4 x 6"
+    }
+
     function refreshGamesList() {
-        getGameResults('all', {offset: offset, ipp: itemsPerPage}, function (gamesList) {
+        getGameResults('all', parameters, function (gamesList) {
             console.log(JSON.stringify(gamesList))
             total = gamesList.pagination.itemsCount
-            offset = gamesList.pagination.offset
+            parameters.offset = gamesList.pagination.offset
             games = gamesList.items
         })
     }
@@ -36,8 +46,13 @@
     }
 
     function onSelectPage(event) {
-        offset = parseInt(event.detail.offset)
-        itemsPerPage = parseInt(event.detail.ipp)
+        parameters.offset = parseInt(event.detail.offset)
+        parameters.ipp = parseInt(event.detail.ipp)
+        refreshGamesList()
+    }
+
+    function onFilterByUserName(event) {
+        parameters.playerNamePrefix = event.detail
         refreshGamesList()
     }
 
@@ -57,6 +72,14 @@
             <h2>Games Archive</h2>
         </div>
     </div>
+    <div class="row mb-3 mt-3">
+        <div class="col-sm-4 d-inline-flex">
+            <UserNameFilter on:filterByUserName={onFilterByUserName} defaultOption="all"/>
+        </div>
+        <div class="col-sm-4 d-inline-flex">
+            <OptionFilter options="{GAME_OPTION_FILTER}"/>
+        </div>
+    </div>
     <div class="row row-cols-1 row-cols-sm-3">
         {#each games as game}
             <div class="col-sm-4">
@@ -65,6 +88,6 @@
         {/each}
     </div>
     <div class="row justify-content-md-center">
-        <Paginator itemsPerPage={itemsPerPage} totalItems={total} offset={offset} on:selectpage={onSelectPage}/>
+        <Paginator itemsPerPage={parameters.ipp} totalItems={total} offset={parameters.offset} on:selectpage={onSelectPage}/>
     </div>
 </div>
