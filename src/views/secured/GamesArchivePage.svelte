@@ -5,14 +5,21 @@
     import GameResultItem from '../../components/GameResultItem.svelte'
     import {getGameResults} from "../../scripts/game";
     import Paginator from "../../components/Paginator.svelte"
+    import UserNameFilter from "../../components/UserNameFilter.svelte"
+    import OptionFilter from "../../components/OptionFilter.svelte"
 
     export let currentRoute
     export let params = {}
 
     let total = 0
-    let offset = 0
-    let itemsPerPage = 15
     let games = []
+    let gameOption = 'all'
+    let parameters = {
+        playWithBot: false,
+        playerNamePrefix: '',
+        offset: 0,
+        ipp: 15
+    }
 
     $: {
         if ($reloadPage) {
@@ -22,10 +29,10 @@
     }
 
     function refreshGamesList() {
-        getGameResults('all', {offset: offset, ipp: itemsPerPage}, function (gamesList) {
+        getGameResults(gameOption, parameters, function (gamesList) {
             console.log(JSON.stringify(gamesList))
             total = gamesList.pagination.itemsCount
-            offset = gamesList.pagination.offset
+            parameters.offset = gamesList.pagination.offset
             games = gamesList.items
         })
     }
@@ -36,8 +43,28 @@
     }
 
     function onSelectPage(event) {
-        offset = parseInt(event.detail.offset)
-        itemsPerPage = parseInt(event.detail.ipp)
+        parameters.offset = parseInt(event.detail.offset)
+        parameters.ipp = parseInt(event.detail.ipp)
+        refreshGamesList()
+    }
+
+    function onFilterByUserName(event) {
+        parameters.playerNamePrefix = event.detail
+        refreshGamesList()
+    }
+
+    function onSelectOption(event) {
+        gameOption = event.detail
+        refreshGamesList()
+    }
+
+    function onPlayWithHuman() {
+        parameters.playWithBot = false
+        refreshGamesList()
+    }
+
+    function onPlayWithBot() {
+        parameters.playWithBot = true
         refreshGamesList()
     }
 
@@ -57,6 +84,25 @@
             <h2>Games Archive</h2>
         </div>
     </div>
+    <div class="row mb-3 mt-3">
+        <div class="col-sm-4 d-inline-flex">
+            Play against
+            <div class="btn-group btn-group-toggle ml-3" data-toggle="buttons">
+                <label class="btn btn-secondary active">
+                    <input type="radio" name="options_a" id="human_id" autocomplete="off" checked on:change={onPlayWithHuman}>Human
+                </label>
+                <label class="btn btn-secondary">
+                    <input type="radio" name="options_a" id="computer_id" autocomplete="off" on:change={onPlayWithBot}>Computer
+                </label>
+            </div>
+        </div>
+        <div class="col-sm-4 d-inline-flex">
+            <OptionFilter on:selectOption={onSelectOption}/>
+        </div>
+        <div class="col-sm-4 d-inline-flex">
+            <UserNameFilter on:filterByUserName={onFilterByUserName}/>
+        </div>
+    </div>
     <div class="row row-cols-1 row-cols-sm-3">
         {#each games as game}
             <div class="col-sm-4">
@@ -65,6 +111,6 @@
         {/each}
     </div>
     <div class="row justify-content-md-center">
-        <Paginator itemsPerPage={itemsPerPage} totalItems={total} offset={offset} on:selectpage={onSelectPage}/>
+        <Paginator itemsPerPage={parameters.ipp} totalItems={total} offset={parameters.offset} on:selectpage={onSelectPage}/>
     </div>
 </div>
