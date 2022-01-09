@@ -1,16 +1,18 @@
 <script>
-    export let options = {}
-    export let defaultOption
+    import { createEventDispatcher } from 'svelte';
+    import {GAME_OPTIONS} from '../scripts/constants'
+
+    const dispatch = createEventDispatcher();
 </script>
 
-<div class="btn-group" role="group">
-    {#each Object.entries(options) as [key, value]}
-        {#if defaultOption !== undefined && defaultOption === key}
-            <input type="radio" class="btn-check" name="btnradio" id="{key}_id" autocomplete="off" checked>
-            <label class="btn btn-outline-primary" for="{key}_id">{value}</label>
-        {:else}
-            <input type="radio" class="btn-check" name="btnradio" id="{key}_id" autocomplete="off">
-            <label class="btn btn-outline-primary" for="{key}_id">{value}</label>
-        {/if}
+Game option
+<div class="btn-group ml-3 btn-group-toggle" data-toggle="buttons">
+    <label class="btn btn-secondary active">
+        <input type="radio" name="options" id="option1" autocomplete="off" checked on:change={() => dispatch('selectOption', 'all')}>All
+    </label>
+    {#each Object.entries(GAME_OPTIONS) as [gameOptionName, gameOption]}
+        <label class="btn btn-secondary">
+            <input type="radio" name="options" id="option2" autocomplete="off" on:change={() => dispatch('selectOption', gameOptionName)}>{gameOption.title}
+        </label>
     {/each}
 </div>

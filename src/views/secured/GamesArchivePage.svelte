@@ -13,7 +13,9 @@
 
     let total = 0
     let games = []
+    let gameOption = 'all'
     let parameters = {
+        playWithBot: false,
         playerNamePrefix: '',
         offset: 0,
         ipp: 15
@@ -26,13 +28,8 @@
         }
     }
 
-    const GAME_OPTION_FILTER = {
-        all: "All",
-        game_4x6: "4 x 6"
-    }
-
     function refreshGamesList() {
-        getGameResults('all', parameters, function (gamesList) {
+        getGameResults(gameOption, parameters, function (gamesList) {
             console.log(JSON.stringify(gamesList))
             total = gamesList.pagination.itemsCount
             parameters.offset = gamesList.pagination.offset
@@ -56,6 +53,21 @@
         refreshGamesList()
     }
 
+    function onSelectOption(event) {
+        gameOption = event.detail
+        refreshGamesList()
+    }
+
+    function onPlayWithHuman() {
+        parameters.playWithBot = false
+        refreshGamesList()
+    }
+
+    function onPlayWithBot() {
+        parameters.playWithBot = true
+        refreshGamesList()
+    }
+
     onMount(() => {
         currentPath.set(currentRoute.path)
         refreshGamesList()
@@ -74,10 +86,21 @@
     </div>
     <div class="row mb-3 mt-3">
         <div class="col-sm-4 d-inline-flex">
-            <UserNameFilter on:filterByUserName={onFilterByUserName} defaultOption="all"/>
+            Play against
+            <div class="btn-group btn-group-toggle ml-3" data-toggle="buttons">
+                <label class="btn btn-secondary active">
+                    <input type="radio" name="options_a" id="human_id" autocomplete="off" checked on:change={onPlayWithHuman}>Human
+                </label>
+                <label class="btn btn-secondary">
+                    <input type="radio" name="options_a" id="computer_id" autocomplete="off" on:change={onPlayWithBot}>Computer
+                </label>
+            </div>
         </div>
         <div class="col-sm-4 d-inline-flex">
-            <OptionFilter options="{GAME_OPTION_FILTER}"/>
+            <OptionFilter on:selectOption={onSelectOption}/>
+        </div>
+        <div class="col-sm-4 d-inline-flex">
+            <UserNameFilter on:filterByUserName={onFilterByUserName}/>
         </div>
     </div>
     <div class="row row-cols-1 row-cols-sm-3">
