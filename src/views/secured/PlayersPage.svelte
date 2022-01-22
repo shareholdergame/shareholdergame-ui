@@ -4,26 +4,31 @@
     import {GAME_OPTIONS} from "../../scripts/constants";
     import PlayerNameLink from '../../components/PlayerNameLink.svelte'
     import Paginator from "../../components/Paginator.svelte"
+    import UserNameFilter from "../../components/UserNameFilter.svelte"
 
     export let currentRoute
     export let params = {}
 
     let total = 0
-    let offset = 0
-    let itemsPerPage = 10
     let playerStatistics = []
+    let selectedGameOption = 'game_4x6'
+    let parameters = {
+        offset: 0,
+        ipp: 10,
+        playerNamePrefix: ''
+    }
 
     function refreshPlayerStatistics() {
-        getPlayersStatistics('game_4x6', {offset: offset, ipp: itemsPerPage}, function (playerStatisticsResponse) {
+        getPlayersStatistics(selectedGameOption, parameters, function (playerStatisticsResponse) {
             total = playerStatisticsResponse.pagination.itemsCount
-            offset = playerStatisticsResponse.pagination.offset
+            parameters.offset = playerStatisticsResponse.pagination.offset
             playerStatistics = playerStatisticsResponse.items
         })
     }
 
     function onSelectPage(event) {
-        offset = parseInt(event.detail.offset)
-        itemsPerPage = parseInt(event.detail.ipp)
+        parameters.offset = parseInt(event.detail.offset)
+        parameters.ipp = parseInt(event.detail.ipp)
         refreshPlayerStatistics()
     }
 
@@ -47,6 +52,15 @@
         }
     }
 
+    function onSelectGameOption() {
+        refreshPlayerStatistics()
+    }
+
+    function onFilterByUserName(event) {
+        parameters.playerNamePrefix = event.detail
+        refreshPlayerStatistics()
+    }
+
     onMount(() => {
         refreshPlayerStatistics()
     })
@@ -62,15 +76,19 @@
             <h2>Players</h2>
         </div>
     </div>
-    <!--<div class="row">
+    <div class="row mb-3 mt-3 pl-3">
         <div class="btn-group btn-group-toggle" data-toggle="buttons">
             {#each Object.entries(GAME_OPTIONS) as [gameOptionName, gameOption]}
-                <label class="btn btn-secondary">
-                    <input type="radio" name="options" id="{gameOptionName}"> {gameOption.title}
+                <label class="btn btn-outline-secondary {selectedGameOption === gameOptionName ? 'active' : ''}">
+                    <input type="radio" name="selectedGameOption" id="{gameOptionName}_id"
+                           bind:group={selectedGameOption} value={gameOptionName} on:change={onSelectGameOption}> {gameOption.title}
                 </label>
             {/each}
         </div>
-    </div>-->
+        <div class="col-sm-4 d-inline-flex">
+            <UserNameFilter on:filterByUserName={onFilterByUserName}/>
+        </div>
+    </div>
     <div class="row table-responsive">
         <table class="table table-striped">
             <thead>
@@ -114,6 +132,6 @@
         </table>
     </div>
     <div class="row justify-content-md-center">
-        <Paginator itemsPerPage={itemsPerPage} totalItems={total} offset={offset} on:selectpage={onSelectPage}/>
+        <Paginator itemsPerPage={parameters.ipp} totalItems={total} offset={parameters.offset} on:selectpage={onSelectPage}/>
     </div>
 </div>

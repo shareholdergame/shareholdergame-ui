@@ -88,10 +88,10 @@
         <div class="col-sm-4 d-inline-flex">
             Play against
             <div class="btn-group btn-group-toggle ml-3" data-toggle="buttons">
-                <label class="btn btn-secondary active">
+                <label class="btn btn-outline-secondary active">
                     <input type="radio" name="options_a" id="human_id" autocomplete="off" checked on:change={onPlayWithHuman}>Human
                 </label>
-                <label class="btn btn-secondary">
+                <label class="btn btn-outline-secondary">
                     <input type="radio" name="options_a" id="computer_id" autocomplete="off" on:change={onPlayWithBot}>Computer
                 </label>
             </div>
