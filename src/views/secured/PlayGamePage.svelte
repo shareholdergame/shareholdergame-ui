@@ -1,5 +1,4 @@
 <script>
-    import { onMount } from 'svelte'
     import Modal from "sv-bootstrap-modal"
     import {currentPath, reloadPage, gameIds} from "../../stores";
     import { getGameReport, makeTurn } from '../../scripts/game'
@@ -11,6 +10,7 @@
     import CardSetPanel from '../../components/CardSetPanel.svelte'
     import ResultPanel from '../../components/ResultPanel.svelte'
     import {GameStatus} from '../../scripts/constants'
+    import { Navigate } from 'svelte-router-spa'
 
     export let currentRoute
     export let params = {}
@@ -42,6 +42,13 @@
         }
     }
 
+    $: {
+        if (game.id === undefined || parseInt(currentRoute.namedParams.gameid) !== game.id) {
+            currentPath.set(currentRoute.path)
+            refreshGameReport(parseInt(currentRoute.namedParams.gameid));
+        }
+    }
+
     function refreshGameReport(gameId) {
         getGameReport(gameId, function (_gameSet) {
             console.log(JSON.stringify(_gameSet))
@@ -65,12 +72,6 @@
             roundsNumber = options.cardOption.major + options.cardOption.minor
         })
     }
-
-    onMount(() => {
-        currentPath.set(currentRoute.path)
-        let gameId = parseInt(currentRoute.namedParams.gameid)
-        refreshGameReport(gameId);
-    })
 
     function updatePosition(event) {
         positionPanel.updateCurrentPosition(currentPosition)
@@ -142,7 +143,7 @@
             {#if gameSet.games !== undefined}
                 {#each gameSet.games as _game}
                     {#if _game.letter !== game.letter}
-                        <button type="button" class="btn btn-link btn-lg" on:click={refreshGameReport(_game.id)}>Game {_game.letter}</button>
+                        <Navigate to="/secure/playgame/{_game.id}">Game {_game.letter}</Navigate>
                     {/if}
                 {/each}
             {/if}

@@ -33,9 +33,25 @@ export async function getPlayerInfo(playerName, successCallback) {
     handleResponse(response, successCallback)
 }
 
-
 export async function getPlayersStatistics(gameOption, parameters, successCallback) {
     let url = API_BASE_URL + '/player/statistics/' + gameOption
+    if (parameters !== undefined) {
+        url = url + '?' + new URLSearchParams(parameters)
+    }
+
+    let response = await fetch(url, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': getBearer()
+        }
+    })
+
+    handleResponse(response, successCallback)
+}
+
+export async function getPlayerAchievements(playerName, gameOption, parameters, successCallback) {
+    let url = API_BASE_URL + '/player/achievements/' + playerName + '/' + gameOption
     if (parameters !== undefined) {
         url = url + '?' + new URLSearchParams(parameters)
     }

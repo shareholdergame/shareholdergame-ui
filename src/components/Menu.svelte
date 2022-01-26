@@ -35,6 +35,7 @@
         {#if $authenticated}
             <ul class="nav navbar-nav">
                 <li><a class="nav-link" href="/secure/newgame">Новая Игра</a></li>
+                <li><a class="nav-link" href="/secure/player/{$user}">Мои достижения</a></li>
                 <li><a class="nav-link" href="/secure/gamesarchive">Архив Игр</a></li>
                 <li><a class="nav-link" href="/secure/players">Игроки</a></li>
             </ul>
