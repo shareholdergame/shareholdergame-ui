@@ -1,5 +1,4 @@
 <script>
-    import { onMount } from 'svelte';
     import {isMe} from '../../auth.js';
     import {getPlayerInfo, getPlayerAchievements} from "../../scripts/player";
     import {GAME_OPTIONS} from "../../scripts/constants";
@@ -11,6 +10,7 @@
 
     let player
     let total = 0
+    let totalAchievements = {}
     let achievements = []
 
     let selectedGameOption = 'game_4x6'
@@ -47,6 +47,7 @@
             total = data.pagination.itemsCount
             parameters.offset = data.pagination.offset
             achievements = data.items
+            totalAchievements = data.total
         })
     }
 
@@ -55,10 +56,6 @@
         parameters.ipp = parseInt(event.detail.ipp)
         getAchievements()
     }
-
-    onMount(() => {
-        //refreshPage()
-    })
 </script>
 
 <svelte:head>
@@ -105,6 +102,7 @@
             {/each}
         </div>
     </div>
+
     <div class="row table-responsive">
         <table class="table table-striped">
             <thead>
@@ -121,6 +119,21 @@
             </tr>
             </thead>
             <tbody>
+            <tr>
+                <td class="text-center"><b>Total</b></td>
+                <td class="text-center"><b>{totalAchievements.totalPlayed}</b></td>
+                <td class="text-center"><b>{totalAchievements.winsCount}</b></td>
+                <td class="text-center"><b>{totalAchievements.positiveDrawsCount}</b></td>
+                <td class="text-center"><b>{totalAchievements.negativeDrawsCount}</b></td>
+                <td class="text-center"><b>{totalAchievements.losesCount}</b></td>
+                <td class="text-center"><b>{totalAchievements.maxResult}</b></td>
+                <td class="text-center"><b>{totalAchievements.maxWon}</b></td>
+                <td class="text-right">
+                        <span class="{totalAchievements.totalDiff >= 0 ? 'text-success' : 'text-danger'}">
+                            <b>{totalAchievements.totalDiff}</b>
+                        </span>
+                </td>
+            </tr>
             {#each achievements as achievement}
                 <tr>
                     <th scope="row">
